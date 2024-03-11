@@ -1,0 +1,43 @@
+  ## 1.2 Empirical Bayes Estimation
+    - 식 (1.36) → J-S estimator가 MLE 보다 좋은 추정량이라는 것의 guarantee
+    - 
+  
+  
+  ## 1.3 Estimating the Infividual Components
+    - Table 1.2 에서 10번째 estimator 비교를 주목해보자.
+      → 왜 이런 결과가 나왔을까?
+      → Pooling Average 이기 때문
+      → 이거에 대한 단점 극복이 식 (1.37) “limitedtranslationestimator” → zi가 극단(크거나 작을 때)에 있을 때 MLE를 선택하게 강요하도록
+  
+  ## 1.4 Learning from the Experience of Others
+    - Figure 1.2에서 Kidney score에 대해 어떤 방식으로 접근해야 좋을지?
+      ▶ Regression 관점으로 해석하는 것이 좋다.
+      ▷ 55세의 평균 값이 좋다.
+  
+      → 전자가 훨씬 낫다. 55세 평균치를 사용하기에는 데이터가 적기 때문에 아무래도 현재 상황에 대해 일반화할 수 있는 Regression 방법이 더 적절하다고 판단
+  
+  ## 1.5 Empirical Bayes Confidence Intervals
+    - 우리가 제안하는 J-S Estimator가 빈도주의 관점에서 유도했는데 베이지안 관점에서도 써먹을 수 있는지?
+
+
+# Large-Scale Hypothesis Testing
+
+  ## 2.1 A Microarray Example
+    - link : (https://cdas.cancer.gov/datasets/plco/20/) 참고
+    - 전통적인 testing 방법에서 유전 데이터에 적절한 testing setting으로 확장해 나가는 과정
+    - Figure 2.1
+      → data에서 나온 분포가 실제 N(0,1)과 같다고 볼 수 있는가?
+        ▶ 없다. 보수적으로 바라보면, 표준정규분포 자체와 hist 분포가 정확히 일치하지 않기 때문 (극단값이라던지 평균 근처를 관찰해보면 알 수 있다.)
+      → 위 그림에서 Bonferroni bound를 적용할 수 없는 이유? 즉, 4.31이 넘는 |zi| 값에 대해 cautious인 이유는?
+        ▶ 모든 zi가 N(0,1)을 따르는 것이 아니기 때문에. 꼭 양 극단값이 아니더라도 Non Null이기 때문 (이게 무슨 뜻이지?)
+    - excercise 2.3과 2.4는 넘어가심
+
+  ## 2.2 Bayesian Approach
+    - 식 (2.8)을 이해하기 위한 쉬운 설명 : 대부분의 유전자가 질병과 관련 (x)의 세팅
+    - false discovery ratio 개념
+    - fdr과 Fdr의 차이
+    - 컬리 Z는 어떻게 구성하면 되는지? 예를 들어, 구간을 어떻게 잡는지?
+      → 0.05보다 작을만큼 정하기 (기준이 뭐지?)
+  
+  ## 2.3 Empirical Bayes Estimates
+    - 식 (2.21)
