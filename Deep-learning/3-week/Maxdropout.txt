@@ -1,1 +1,56 @@
-MaxDropout: deep neural network regularization based on maximum output values
+논문 제목 : "MaxDropout: deep neural network regularization based on maximum output values"
+
+# 리뷰 개요
+- 논문에서 제안하는 MaxDropout 방법은 Hideen layer에서 가장 활발한 뉴런을 끔으로써 작동하는 regularization 기법입니다.
+- 제가 생각했을 때, dropout과 차이점은 dropout의 경우 베르누이분포에서 h를 샘플링하여 활성화된 뉴런들을 binary하게 끄는 반면
+  maxdropout은 균등분포에서 뽑은 rate와 L2 normalization을 거친 tensor의 maximum을 활용해 dropout을 진행합니다.
+# 선행연구
+- Regularization이 필요한 이유?
+  → 모델이 training data를 학습하는 과정에서 과도하게 데이터에 의존하게 되면 일반화의 어려움이 있다. 즉, overfitting이 발생하는 문제가 생깁니다.
+
+## Regularization mehtod 1 : Batch Normalizaiton
+- 주어진 layer를 반복마다 정규화하는 방법
+- 학습하는 과정의 각각 layer에서 activation의 분포가 달라지는 문제를 해결
+- 미니배치 단위별 평균과 분산을 구하고 이것을 바탕으로 normalize 진행
+
+## Regularization mehtod 2 : Dropout
+- dropout의 경우 베르누이분포에서 h를 샘플링하여 활성화된 뉴런들을 binary하게 끔
+- 기본 원리는 회귀분석에서 L1, L2 penalty를 부여해 지나친 training을 규제하는 아이디어에서 기인
+
+# 방법론
+fig. 1 에서 제시하는 이미지를 예시로 방법론에 대한 직관을 제가 이해한대로 설명드리면,
+- 원본 이미지 (a)에서 적절히 이미지에 대한 정보를 살리면서 과 활성화된 뉴런들을 dropout 시킴으로써 (c)를 보였습니다.
+- 그냥 dropout 방법의 경우는 (b)처럼 사람이 직관적으로 알아보기 힘들게 합니다.
+- 따라서 dropout을 통해 overfitting을 피하면서 적절한 문맥의 이미지를 유지하는 것이 maxdropout의 장점으로 이해했습니다.
+
+[algorithm 1]
+\begin{algorithm}
+\begin{algorithmic}[1]
+\While{training}
+    \For{each layer}
+        \State $rate \gets U(0, r)$
+        \State $normTensor \gets L2Normalize(Tensor)$
+        \State $max \gets Max(normTensor)$
+        \State $keptIdx \gets IdxOf(normTensor > (1 - rate) \times max)$
+        \State $returnTensor \gets$ Tensor elements at $keptIdx$
+    \EndFor
+\EndWhile
+\end{algorithmic}
+\end{algorithm}
+
+** 알고리즘 6번째 줄에서 index fuction을 넣은 이유는 주어진 (1-rate)*max 값이 1보다 커질 수 있으므로 처리해둔 것. **
+
+# 실험
+- dataset : CIFAR-10 과 CIFAR-100 이용
+- 기본적인 세팅은 ResNet 모델을 이용했고 각각 원본 모델, RandomErasing, Cutout, MaxDropout을 적용했음. 총 4가지 세팅이 있습니다.
+
+- TABLE I을 통해 CIFAR-100 데이터에서는 제안한 방법이 약간 우수한 성과를 달성
+- CIFAR-10 에서는 Cutout이 우수
+  → 왜 이런 결과가 나왔을까 궁금했습니다.
+
+- fig. 3과 fig. 4 에서 testd set의 수렴성을 통해 과적합에 강력한지 알아본다고 논문에서 제시했는데 이게 정말 과적합에 강력한거라고 해석할 수 있는지 궁금했습니다.
+
+
+느낀점 : 회귀분석에서 배웠던 Lasso, ridge의 핵심 아이디어인 penalty를 딥러닝 모델에서 dropout 방법을 통해 적용했다는 사실이 굉장히 인상깊었습니다.
+특히, 단순하게 dropout을 한게 아니고 과하게 활성화된 뉴런의 작동을 끔으로써 overfitting을 피한다는 아이디어가 재미있었습니다.
+만약에 이 주제를 가지고 논문을 쓴다면, 어떻게 dropout 해낼 것인지 데이터에 맞게 풀어나간다면 재밌는 연구가 될 것 같습니다.
