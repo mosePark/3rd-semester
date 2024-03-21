@@ -1,0 +1,1 @@
+MaxDropout: deep neural network regularization based on maximum output values
