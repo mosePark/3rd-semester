@@ -1,1 +1,30 @@
+논문 제목 : "Supermix: Supervising the mixing data augmentation"
 
+# 리뷰 개요 (Data augmentation as DA)
+-  a supervised mixing augmentation method, 각각의 이미지 객체의 특성을 반영하여 혼합하면 더 나은 성능의 data augmentation이 될 수 있다.
+- 알고리즘 측면에서는 GD 말고 Newton method로 변형해 효율성을 증대.
+
+# 선행연구
+- DA가 왜 필요한가?
+  → 질적이고 양적인 training set으로 인한 overfitting 해결 (일반화)
+- 전통적인 DA 방법은,
+  → 뒤집기, 자르기, 크기 수정, 색상 노이즈 등 다양한 방법
+- 최근에는,
+  → Mixing augmentation : CutMix, Mixup 등
+- In this paper,
+  → 최적화 문제 정의
+  → object classification, knowledge distrillation 등 여러 task에 응용
+
+
+# 방법론
+  ## MixUp
+    - beta(a,a)에서 weight를 뽑고 그 weight를 활용해 서로 혼합한 이미지 데이터(원핫인코딩 됌)들을 가중평균한다. 
+
+  ## SuperMix
+    - 
+
+# 실험
+
+
+
+느낀점 : 
