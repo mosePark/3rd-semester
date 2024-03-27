@@ -1,0 +1,24 @@
+논문 제목 : "Random Boxes Are Open-world Object Detectors"
+
+# 개요 (object detection)
+
+  - 기존에 잘 알려진 Transformer 기반 OWOD보다 우수한 RandBox 아키텍쳐를 제안.
+  -  classifier가 label이 없는 학습에서도 높은 재현율을 끌어올릴 수 있는 장점을 갖고 있음.
+
+# 소개 및 관련 연구
+
+  → label이 있는 객체들만 학습을 진행하기 때문에 모르는 객체에 대해서 편향을 가질 수 있는 문제가 생김 
+  - Known-FG (foreground), BG (background), Unknown-FG
+    → 시스템은 알려지지 않은 객체와 단순한 배경을 구분하는 데 어려움을 겪음. (confidnce score ↓)
+    → Unknown-FG : 모르는 객체에 대해서는 low recall인 단점
+
+  * 따라서  Randombox 방법론을 이용해 confounding 효과를 제거함.
+  
+
+# 방법론
+
+
+# 실험
+ 
+
+느낀점 : Object detection 주제 논문은 처음 읽고 배경지식이 없기 때문에 조금 어려웠습니다. 
