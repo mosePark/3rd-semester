@@ -21,10 +21,20 @@
     - beta(a,a)에서 weight를 뽑고 그 weight를 활용해 서로 혼합한 이미지 데이터(원핫인코딩 됌)들을 가중평균한다. 
 
   ## SuperMix
-    - 
+    - 식 (1) 처럼 mixing function을 정의한다. 이 식을 통해 mixing mask M을 정의한다.
+    - 그리고 soft label $y_hat$을 식 (2)와 같이 정의한다.
+    - mixup 방법에서 조금 더 앞서나간 목적식의 형태를 가지고 있는데 약간의 차이점이라면,
+      → 예측된 클래스 (one hot vector형태)에 beta dist에서 뽑은 r을 가중평균하여 식을 구성했다. ( (r_1, ..., r_i) 는 dir(a)에서 추출
+    - 목적식 loss function (3)은 예측된 클래스의 확률 분포와 soft label의 분포간 거리를 minimize한다.
+      → 즉, 예측했던 것과 label의 분포 사이 거리를 최소화하니 분포가 동일하진 않지만 그만큼 가깝다. (비슷하다.)
+      → 추가로 sparsity, smooth를 보간해주는 term 이 loss function에 포함된다.
+
+    * 최적화 푸는 식은 이해가 어려웠습니다.
+
 
 # 실험
+  - 벤치마크 데이터셋에서 각각 auto aug와 mixing aug, 그리고 제안된 supermix의 object classfication 수행 결과, 성능 개선이 있었음.
+  - Knowledge Distillation에서도 성과가 있었다.
 
 
-
-느낀점 : 
+느낀점 : 이 논문을 읽으면서 data augmetation을 서로 다른 이미지로 섞어서 만들 수도 있다는 것이 신기했습니다. 제가 배웠던 것은 단순히 노이즈를 추가해 만들었다는 것 까지 배웠습니다. 특히, 이미지 데이터 object들이 다소 이질적인데 벤치마크 데이터에서 성능 향상이 있었다는 점이 인상깊었습니다. 
