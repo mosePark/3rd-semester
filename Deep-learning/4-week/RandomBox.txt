@@ -2,8 +2,8 @@
 
 # 개요 (object detection)
 
-  - 기존에 잘 알려진 Transformer 기반 OWOD보다 우수한 RandBox 아키텍쳐를 제안.
-  -  classifier가 label이 없는 학습에서도 높은 재현율을 끌어올릴 수 있는 장점을 갖고 있음.
+  - 기존에 잘 알려진 Transformer 기반 OWOD보다 우수한 RandBox 아키텍처를 제안.
+  -  classifier가 label이 없는 학습에서도 높은 재현율을 끌어올릴 수 있는 장점을 갖고 있음. (OWOD 단점 극복)
 
 # 소개 및 관련 연구
 
@@ -16,9 +16,40 @@
   
 
 # 방법론
+  ## Preliminaries : OWOD
+  - Detector : 이미지를 입력으로 주어졌을 때 proposal(예측 영역)을 출력
+    → Faster R-CNN
+    → DETR
+  - Known-FG
+    - 모든 예측 P에서 실제 label과 매칭해 Known-FG 선택
+  - Unknown-FG
+    - 매칭되지 않은 예측에서 Unknwon-FG와 BG를 선택
 
+  ## Loss function
+    - known-FG loss : 분류 loss와 회귀 loss를 모두 계산
+    - Unknown-FG loss : 분류 loss만 계산 (Unknown-FG, BG는 주석이 달린 bbox가 없기 때문)
+    - overall loss : 위 두가지 loss의 가중합
+
+  ▶ Random Box
+    - 랜덤 영역 제안 생성
+      - randomly
+    - 매칭 점수
+      - 페널티를 주지 않는 매칭 점수 제안 - 더 많은 Unknown 객체를 탐색하기 위함
+    * Unknown object들의 낮은 recall 문제를 위 두가지 방법으로 해결
+
+# 이론
+  - Causal model을 통해 이론적인 검증 및 분석
 
 # 실험
- 
+  - Dataset
+    - Pascal VOC, MS-COCO : 각각 a, b로
+  - 평가지표 : mAP, Unknown recall, WI, A-OSE
 
-느낀점 : Object detection 주제 논문은 처음 읽고 배경지식이 없기 때문에 조금 어려웠습니다. 
+  - task 1 : a에서 20개 클래스를 known으로, b에서 60개 클래스를 unknown으로
+  - task 2~4 : b에 20개 추가
+
+  - 결과 : random box가 특히 U-R과 A-OSE에서 owod에 비해 큰 개선, RandBox가 Known obj 탐지를 희생하는 대신 unknown ojb를 학습하여 known obj 탐지에 도움이 되도록 함.
+
+
+느낀점 : Object detection 주제 논문은 처음 읽고 배경지식이 없기 때문에 조금 어려웠습니다. 이번 논문을 읽으면서 데이터가 주어질때 어떻게 잘 적절히 쓸 것인지가
+성능 개선에 도움이 된다는 것을 느꼈습니다. 다양한 세팅의 실험을 통해 제안한 모델을 검증하는 과정에 많은 노력이 느껴졌습니다.
