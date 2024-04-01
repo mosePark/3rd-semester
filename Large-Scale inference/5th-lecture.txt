@@ -1,0 +1,36 @@
+2024년 04월 01일
+
+# 4 False Discovery Rate Control
+  - 1종 오류를 통제하는 것이 이제는 Fdr을 컨트롤하는 것으로 보수적으로 이어지게 된다.
+
+
+  ## 4.1 
+    - decision rule D 는 N개의 귀무 가설 중 R개를 reject했고 a개 결정이 잘못 됌. 즉, Fdp = a/R
+    - FWER = Pr{a > 0}
+    - simple setting 에서는 식 (4.2)가 1종 오류율, (4.3)을 beta.
+
+  ## 4.2 Benjamini and Hochberg's FDR Controll
+    - p value i ~ Unif(0, 1)
+    - oredered p-values
+    - FDP = 실제로 null인 사례의 수 / 거절된 사례 총 수 ( if 분모가 0이면 fdp는 0)
+
+    * 규칙은 다음과 같습니다.
+      * (0,1) 사이 fix된 q값에 대해 (i)-th p-value <= i * q / N 를 만족하는 가장 큰 index i_max를 찾자.
+      * i <= i_max 인 경우는 null을 reject
+
+  ## Thm 4.1
+    BH의 Fdp 기대값 = pi_0 * q <= q where pi_0 = N_0 / N
+    - BH 방법이 i배 만큼 더 보수적으로 reject할 것이다. (대상이 뭐지? FWER인가?)
+    - 이 파트에서 수업에서 들었던 내용은 전통 통계학에서는 1종오류를 적절히 두면서 power가 쎈거를 찾는 것인데, BH의 Fdp의 경우 reject를 해야할 경우에만 더 많은 사례를 reject하는 것이 좋은 일.
+
+
+  ## BH 방법론에 대한 논의
+    - 독립성 가정
+    - R = 0 일 때 처리
+    - 오류율의 기대값 대 오류율의 확률 컨트롤
+    - q의 선택
+    - p-value 계산
+
+  ## 증명 (필기 참고)
+    - 식(4.19)가 마팅게일인지 보이기 - 확률과정론 증명 테크닉
+    - BH rule과 식 (4.18)이 같은지 보이기
