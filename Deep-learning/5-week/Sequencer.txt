@@ -1,1 +1,24 @@
 
+논문 제목 : "Sequencer: Deep LSTM for Image Classification"
+  - 귀납적 편향(Inductive Bias)이란?
+    - 모델이 학습 과정에서 가정하거나 선호하는 특정 패턴이나 구조
+    - 사과 바나나 예시
+  - LSTM 기반 Sequencer 모델 제안, 귀납적 편향에 대한 새로운 관점
+  
+
+# 소개
+  - 과거는 vision 분야에서 탁월한 성과를 지닌 CNN, 현재는 self-attention을 활용한 ViT
+  - 다른 분야의 아키텍쳐는 비전 분야에서 어떤 효과를 보일지 관심
+  * 제안하는 모델 Sequencer은 BiLSTM를 이용, macro-architecture 디자인은 ViTs를 따름
+  - ImageNet-1K 데이터로 사전학습, 고해상도 이미지에 강점
+
+# 방법론
+  ## LSTM
+  - LSTM은 입력게이트, 출력게이트, 망각게이트로 구조
+  - BiLSTM은 상호 의존성이 예상되는 시퀀스에 장점을 갖고 있다.
+
+  ## 모델 아키텍쳐
+    - 
+
+
+느낀점 : 
