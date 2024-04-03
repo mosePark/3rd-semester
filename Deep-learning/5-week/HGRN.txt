@@ -1,0 +1,25 @@
+논문 제목: "Hierarchically Gated Neural Network(HGRN) for Efficient Sequence Modeling"
+
+# 요약
+
+  - 기존 RNN 및 파생 모델들은 순차적 훈련 속도의 한계와 장기 의존성 모델링의 제약을 가짐
+  - Transformer 모델은 뛰어난 성능을 보였으나 계산 복잡도와 시퀀스 처리 비용에서 새로운 문제점이 발생
+  - HGRN은 계층적으로 구성된 게이트 메커니즘을 통해 short-term 및 long-term 의존성 모두를 효율적으로 처리할 수 있는 새로운 해결책을 제시
+
+# 방법론
+
+  ## 문제점
+    - 느린 순차적 훈련과 장기 의존성 모델링의 한계
+    - Transformer의 높은 비용
+
+  ## 해결책
+    - 요소별 선형 재귀(Elemnt-wise Linear Recurrence, ELR) 관계 사용
+    - Hierarchically Gated Recurrent Units (HGRU) 도입
+      * 원래 망각 게이트 값에 덧셈 가능한 학습 가능한 하한값을 추가하여, 포화된 게이트의 문제를 완화하고,
+        게이트 활성화를 포화된 영역에서 멀어지게 함.
+        이를 통해 하위 계층에서는 단기 의존성을, 상위 계층에서는 장기 의존성을 효과적으로 모델링
+
+# 실험
+  
+  - WikiText-103 및 Pile 데이터셋을 통한 언어 모델링과 ImageNet-1K를 통한 이미지 분류에서 HGRN의 성능 측정
+  - 실험 결과, HGRN은 텍스트와 이미지 데이터 모두에서 높은 성능을 보여 복잡한 시퀀스 데이터에 효과적임을 입증
