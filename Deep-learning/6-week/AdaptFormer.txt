@@ -6,4 +6,14 @@
 
 # 제안하는 방법론
   ## 접근 방식
-    - 
+    - ViT에 단 2%의 추가 파라미터를 덧붙인 경량화 방식
+    - original ViT의 사전 학습 파라미터들을 조정할 필요 없음
+      → ViT의 transferability를 향상
+    - action recognition task에서 기존 fine tuning model들보다 우수한 결과를 낳음
+
+# 궁금한 점
+  - attention 메커니즘에 대한 이해가 필요 → 기계학습 수업 때 들었지만 아직 재대로된 이해가 필요하다고 판단.
+    - 도움이 되는 영상 : [attention 시각화 영상](https://www.youtube.com/watch?v=eMlx5fFNoYc)
+
+# 느낀 점
+  - 논문 읽기의 회차를 거듭할수록 딥러닝 지식이 많이 부족하다는 것을 느꼈습니다.
