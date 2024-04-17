@@ -9,3 +9,5 @@
 | 2024-04-03 | Hierarchically Gated Recurrent Neural Network for Sequence Modeling | [NeurIPS 24](https://proceedings.neurips.cc/paper_files/paper/2023/hash/694be3548697e9cc8999d45e8d16fe1e-Abstract-Conference.html) |
 | 2024-04-11 | AdaptFormer: Adapting Vision Transformers for Scalable Visual Recognition | [NeurIPS 22](https://proceedings.neurips.cc/paper_files/paper/2022/hash/69e2f49ab0837b71b0e0cb7c555990f8-Abstract-Conference.html) |
 | 2024-04-11 | Context-aware Attentional Pooling for Fine-grained Visual Classification | [AAAI 21](https://ojs.aaai.org/index.php/AAAI/article/view/16176) |
+| 2024-04-18 | SimMatch: Semi-supervised Learning with Similarity Matching | [CVPR 2022](https://openaccess.thecvf.com/content/CVPR2022/html/Zheng_SimMatch_Semi-Supervised_Learning_With_Similarity_Matching_CVPR_2022_paper.html) |
+| 2024-04-18 | Class-Aware Contrastive Semi-Superivsed Learning | [CVPR 2022](https://openaccess.thecvf.com/content/CVPR2022/html/Yang_Class-Aware_Contrastive_Semi-Supervised_Learning_CVPR_2022_paper.html) |
