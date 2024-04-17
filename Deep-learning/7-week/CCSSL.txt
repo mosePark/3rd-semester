@@ -1,1 +1,36 @@
+논문 제목 : "Class-Aware Contrastive Semi-Supervised Learning"
 
+# 기존 문제점
+  - 기존 방법인 semi-supervised learning은 pseudo-label을 사용해 높은 성능을 달성했지만 pseudo-label에 의한 noise와 bias가 문제로 지적
+  - label이 없는 실제 데이터셋에서 분포 불일치와 unknown한 클래스로 인해 성능 저하
+
+# 해결책
+  - Class-aware Contrastive Semi-Supervised Learning (CCSSL)을 제안하여 artificial label의 품질을 향상시키고 모델의 견고함을 강화
+  - CCSSL은 신뢰할 수 있는 내부 분포 데이터를 클래스별로 클러스터링하고, 노이즈가 많은 외부 분포 데이터를 이미지별 대조 학습을 통해 일반화 성능 향상
+  - target re-weighting 을 통해 clean한 label learning에 중점을 두고 noisy label learning은 감소시킴
+
+# 결과
+  - CCSSL은 기존 SSL 방법들보다 상당한 성능 개선을 이루며, 특히 CIFAR100과 STL10 데이터셋에서 우수한 결과
+  - 실세계 데이터셋 Semi-iNat 2021에서도 기존 방법들을 상당히 개선하여 높은 성능을 달성
+
+# 요소
+  - data augmentation
+    - label 존재 여부 상관없이 모두 이미지 뷰를 생성해 모델 일반화 향상
+
+  - encoder
+    - 이미지에서 feature 추출
+
+  - semi-supervised learning module
+    - pseudo-label 기반 학습. pseudo-label의 신뢰도에 따라 가중치를 조정
+  
+  - class-aware contrastive learning module
+    - 레이블 정보를 활용해 같은 클래스 내의 이미지를 가깝게, 다른 클래스라면 멀게 함. 클래스 수준 정보를 활용해 contrastive loss를 계산
+
+# 알고리즘
+
+1. semi-supervised learning module을 통해 간단한 augmentation을 적용한 레이블이 없는 데이터에서 모델 예측을 생성
+2. 예측된 pseudo-label을 기반으로 class-aware contrastive learning module에서 사용할 대조적 행렬을 구성
+3. 레이블이 있는 데이터와 레이블이 없는 데이터 모두에서 feature를 추출하고, 이를 기반으로 각 데이터 샘플의 임베딩을 생성
+4. 생성된 임베딩을 사용하여 클래스 정보를 유지하면서도 노이즈를 제거할 수 있는 최적의 대조적 학습을 수행
+
+느낀점 : noisy한 문제를 어떻게 해결했는지에 대한 디테일이 궁금했습니다.
