@@ -20,7 +20,7 @@ Attention and Transformer
   예를 들어, 기계 번역에서는 한 언어의 여러 단어(즉, 문장)를 입력으로 받아 다른 언어의 여러 단어(즉, 문장)로 번역
   시퀀스-투-시퀀스(Seq2Seq) 모델은 전체 시퀀스 입력 후 출력을 생성하는 형태로, 예를 들어 문장 생성에서는 입력 단어를 주고 다음 단어를 예측
 
-# Seq2Seq
+Seq2Seq
 
   Seq2Seq 모델은 인코더와 디코더로 구성됩니다.
   인코더: 입력 시퀀스를 고정 크기의 컨텍스트 벡터로 압축합니다.
@@ -63,3 +63,50 @@ Attention and Transformer
     - scaled dot-product
     - Bilinear
     - Multi-layer (General)
+
+Transformer
+  - attention 이 있는 seq2seq 모델의 한계점을 극복하고자 제안
+    - Sequential processing : 각 은닉 상태는 이전 정보만을 포함
+    - Long-term Dependency : 리 떨어진 과거의 입력 정보 대부분은 현재 은닉 상태에서 잊혀짐
+
+# self-attention
+  1. Score("I", "I") 계산하기
+    1-1. 필요한 요소 준비
+    1-2. attention score 계산
+  2. attention score 계속 계산
+    - 𝑠𝑐𝑜𝑟𝑒𝑄,𝐾 = 𝑄𝐾𝑇 / 𝑑𝑘**0.5
+  3. softmax 적용
+  4. attention 분포를 value vector에 적용
+
+# transformer 아키텍처
+  ## Encoders
+    1. input embedding, positional encoding
+      - 인풋 임베딩의 경우 512차원 (논문에서 제안)
+      - 위치 임베딩은 단어의 위치에도 정보를 포함하고 있기 때문에 임베딩하는 것, sin() cos() 로 계산
+
+    2. encoder self-attention
+      - 각각의 단어 임베딩 벡터를 self-attention을 통해 갱신
+      - multi-head attention을 통해 각각 나온 attention value들을 concat해줌
+      - 업데이트된 값 벡터들은 ReLU 활성화 함수를 사용하는 2개의 MLP(다층 퍼셉트론) 레이어로 구성된 피드포워드 네트워크를 통과
+      - 마지막으로, 전체 입력 시퀀스를 요약하는 컨텍스트 벡터를 얻음
+      * 이 컨텍스트 벡터는 디코더로 전달되어 출력을 생성합니다.
+      * 구체적으로, 최종 키(Key)와 값(Value)이 디코더로 전달됩니다.
+      
+  ## Decoders
+    1. output embedding, positional encoding
+    2. mask된 decoder self-attention
+      "I am a student"를 "Je suis étudiant"로 번역하는 경우를 고려해 봅시다.
+      예를 들어, "étudiant"를 예측한다고 가정해 봅시다.
+      이는 "<SOS> Je suis"만 주어진 상태에서 "étudiant"를 예측해야 함을 의미합니다.
+      디코더의 자기 주의를 계산할 때 미래의 단어를 고려하는 것은 종류의 부정 행위가 됩니다.
+      따라서 자기 주의 계산 시 미래의 단어를 마스크 처리해야 합니다.
+      미래 단어의 주의 점수에 큰 음수 값을 설정하면 소프트맥스 함수 적용 시 그 값이 0이 됩니다.
+    3. Encoder-Decoder Attention
+      이제 출력 시퀀스에 대해 업데이트된 값 벡터를 자기 주의를 사용하여 가지고 있습니다.
+      입력 시퀀스에서 정보를 통합하기 위해, 인코더의 키와 값, 디코더의 쿼리를 사용합니다.
+      이를 통해 디코더가 디코딩하는 동안 입력 시퀀스의 다양한 부분에 attention을 기울일 수 있습니다.
+
+
+    4. Output Probabilities
+      - 디코더의 출력은 선형 및 소프트맥스 함수를 통해 단어의 확률을 생성
+      - 단어 확률이 가장 높은 값이 할당
