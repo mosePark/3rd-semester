@@ -1,0 +1,37 @@
+"Local False Discovery Rates"
+  - 기존 FDR과 차이는 FDR 정의에서 볼 수 있는데 local의 경우 컬리Z 대신 'z' 로 표기
+  - 개별 파티션에서 FDR을 본다고 생각하면 됌
+
+  # 5.1 
+    - fdr(z)_hat을 식 (5.5)로 정의할 수 있음
+    - 여기서 fdr_hat이 1을 넘게되는 이슈가 발생할 수 있는데 왜냐하면 식 (5.5)의 pi_hat 값을 크게 추정해서 1을 넘을 수 있는 이슈가 발생할 수 있기 때문
+    - f_hat 말고 F_hat 고려하는 이유는 더 적은 error를 내서 좋은 추정량이기 때문
+
+    * fdr_hat의 threshold를 하는 이유??..
+
+  # 5.2 f(z)를 estimate하기 위한 poisson reg 응용
+    - 식 (5.10) exponential model로 스타팅 포인트
+    - Excercise 5.2 경우 J=2 일때 식 (5.10)을 쭉 작성해보면 Normal family인 것을 확인해볼 수 있음
+    - J=7 정도일 때 잘 근사하니 default로 설정이 됌. (R에서 locfdr 함수)
+    - 위 식을 esimate하기 위한 아이디어가 Lindsey's method
+    
+    ## Lindsey's method (fig 5.1a 예시)
+      - 식 (5.11) 과 같이 partition을 균일하게 나눔
+      - K = 90 bins, d = 0.1 (width), Z = [-4.5, 4.5] 에서 y_k를 식 (5.12)와 같이 정의 특정 파티션에서의 z_i의 수
+      - x_k를 특정 bin의 centerpoint라 놓으면 (5.13)
+      - 식 (5.14) 와 같이 N * d * f(x_k)로 둘 수 있다.
+      - 따라서 식 (5.15, 5.16) 과 같이 Poisson GLM으로 응용
+
+      → 위에 제시한 방법이 과연 좋은 추정량인지 파악하고자 식 (5.17)과 같이 deviance를 파악, fig 5.3이 그 결과
+      → table 5.1 실험에서 fdr_bar와 fdr_hat을 비교
+        - fdr_hat이 더 좋다.
+          - 왜냐하면 전체 데이터셋에 있는 정보를 pooling하기 때문에
+          - 값 또한, hat이 더 stable하다는 것을 표에서 볼 수 있다.
+
+      
+    ## 구조 일반화
+      - 책에서 제안하는 방법을 더 일반화 하기 위해 식 (5.21)과 같이 스타트, 각각 자신들만의 확률값과 density를 갖고 있음
+      - 식 (5.22) 와 같이 pi와 f가 모든 포인트 i에 대한 평균으로 표현
+
+      * Excercise 5.5
+        - 실제로는 637번째 유전자가 중요하지만 fdr_hat이 0.105로 낮게 나왔을 때 식 (5.25)를 활용해 보정
