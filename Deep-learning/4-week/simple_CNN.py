@@ -1,3 +1,14 @@
+'''
+합성곱 연산이란 커널(kernel) 또는 필터(filter) 라는 n × m 크기의 행렬로
+높이(height) × 너비(width) 크기의 이미지를 처음부터 끝까지 겹치며 훑으면서
+n × m 크기의 겹쳐지는 부분의 각 이미지와 커널의 원소의 값을 곱해서 모두 더한 값을 출력으로 하는 것을 말합니다.
+이때, 이미지의 가장 왼쪽 위부터 가장 오른쪽 아래까지 순차적으로 훑습니다.
+
+
+[ref](https://wikidocs.net/80437)
+'''
+
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
