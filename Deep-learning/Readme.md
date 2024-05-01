@@ -11,3 +11,5 @@
 | 2024-04-11 | Context-aware Attentional Pooling for Fine-grained Visual Classification | [AAAI 21](https://ojs.aaai.org/index.php/AAAI/article/view/16176) |
 | 2024-04-18 | SimMatch: Semi-supervised Learning with Similarity Matching | [CVPR 2022](https://openaccess.thecvf.com/content/CVPR2022/html/Zheng_SimMatch_Semi-Supervised_Learning_With_Similarity_Matching_CVPR_2022_paper.html) |
 | 2024-04-18 | Class-Aware Contrastive Semi-Superivsed Learning | [CVPR 2022](https://openaccess.thecvf.com/content/CVPR2022/html/Yang_Class-Aware_Contrastive_Semi-Supervised_Learning_CVPR_2022_paper.html) |
+| 2024-05-02 | ReSSL: Relational Self-Supervised Learning with Weak Augmentation | [NeurIPS 21](https://proceedings.neurips.cc/paper_files/paper/2021/hash/14c4f36143b4b09cbc320d7c95a50ee7-Abstract.html) |
+| 2024-05-02 | Rethinking the Augmentation Module in Contrastive Learning | [CVPR 21](https://openaccess.thecvf.com/content/CVPR2022/html/Zhang_Rethinking_the_Augmentation_Module_in_Contrastive_Learning_Learning_Hierarchical_Augmentation_CVPR_2022_paper.html) |
