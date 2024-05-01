@@ -1,0 +1,35 @@
+논문 제목 : "Rethinking the Augmentation Module in Contrastive Learning: Learning Hierarchical Augmentation Invariance with Expanded Views"
+
+# 문제점과 해결책
+  - 문제점 :  pre-determined한 augmentation 유형의 조합은 모델에 특정표현에 대해 불변성을 부여함. (downstream task에 부정적인 영향), 강한 데이터 augmentation은 정보손실을 줌
+  - 해결책 : Hierarchical augmentation invariance 학습, augmentation embedding 확장
+
+# 방법론
+  - 전반적인 구조
+    - multiple augmentation module
+      - 데이터 샘플을 한 쌍의 view가 아닌 여러 쌍의 view로 변환 (add-one 전략)
+      - 증강 유형이 이전 모듈보다 하나 더 많은 여러 증강 모듈을 사용
+    - siamese structure (계층적 쌍둥이 구조?)
+      - 인코더의 깊이에 따라 여러 단계로 나뉨
+      - 각 단계에서 추출된 다양한 view 쌍은 다양한 대조 손실을 계산하는 데 사용
+    - augmentation embedding 확장
+      - 원래 loss를 변경하지 않고 aug embedding으로 view feature를 확장
+      - view 정보와 aug 정보가 concat
+
+  - Hierarchical augmentation invariance
+    - 위에 언급한 증강 유형의 문제를 완화하기 위해 다양한 깊이에서 여러 대조 loss를 계산
+    - 인코더의 부분마다 특정 불변성을 부여
+    - 대조 loss의 경우 ResNet 백본의 각 단계 끝에 도입
+
+  - Feature expansion with augmentation embeddings 
+    → self-supervised learning 중 발생하는 불변성 제거하기 위함
+    1. view간 aug embedding
+      - 각 뷰를 다른 뷰의 label로 간주하고, aug parameter들을 작은 네트워크를 통해 embedding해 view feature를 확장
+    2. feature와 aug embeddings의 결합
+      - 투영 헤드에 공급하기 전에 뷰 특징과 증강 임베딩을 결합
+      - 투영 헤드는 특징 및 색상 관련 정보를 모두 고려하여 대조 학습 목표를 충족
+    3. 대조 loss 적용 변화
+      - 기존의 대조 손실 적용 방식을 개선하여 뷰 특징과 증강 임베딩이 결합된 형태로 손실 계산을 수행
+      → 색상 정보 등 다운스트림 작업에 유용할 수 있는 정보의 제거를 최소화하면서 백본 네트워크에서 유용한 정보를 보다 적절하게 저장하도록 함
+
+느낀점 : 문제점을 해결하는 부분이 굉장히 디테일해서 이해하는 데 어려움을 느낌. 일단 대조 학습에 대한 개념에 숙지가 필요하다고 느낌.
