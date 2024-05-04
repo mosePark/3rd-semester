@@ -12,6 +12,7 @@
 \usepackage{booktabs}
 \usepackage[scale=2]{ccicons}
 
+
 \usepackage{pgfplots}
 \usepgfplotslibrary{dateplot}
 
@@ -89,6 +90,16 @@
 \end{frame}
 %===
 
+%===
+\begin{frame}{Overview}
+    \begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{fig/overview.png}
+    \caption{overview}
+    \end{figure}
+\end{frame}
+%===
+
 
 \section[Intro]{Introduction}
 
@@ -111,27 +122,21 @@
 \def\R{\mathbb{R}}
 %===
 \begin{frame}{Notation}
-
 \begin{itemize}
-    \item $\model : \X \mapsto \mathbb{R}$ with $\X \subseteq \R^d$ : A black-box model
-    \vspace{2mm}
-    \item $\f_{\x} : 2^d \rightarrow \mathbb{R}$ : A set function
-    \vspace{2mm}
-    \item $\ell \in [d]$ : The importance of interactions between features
-    \vspace{2mm}
-    \item $\ex$ : The importance function
-    \vspace{2mm}
+    \itemsep1.5em % 더 큰 간격으로 각 항목 사이의 공간을 일정하게 조정
+    \item $\model : \X \mapsto \mathbb{R}$, where $\X \subseteq \R^d$: A black-box model
+    \item $\f_{\x} : 2^d \rightarrow \mathbb{R}$: A set function
+    \item $\ell \in [d]$: The importance of interactions between features
+    \item $\ex$: The importance function
     \item $\ex(\f, \ell) = (\ex_{S}(\f, \ell))_{S \in \mathcal{S}_\ell} \in \R^{d_\ell}$
-    \vspace{2mm}
     \begin{itemize}
-      \item $\mathcal{S}_\ell$: Each coalition $S \subseteq [d]$ where $0 \leq |S| \leq \ell$
-      \vspace{2mm}
-      \item $d_{\ell} \defeq \sum_{j=0}^{\ell} { d \choose j}$: The number of possible coalitions at level $\ell$
-      \vspace{2mm}
-      \item $\ex(\f, \ell) \in \R^{d_\ell}$: The importance quantity at level $\ell$
+        \vspace{0.3cm}
+        \itemsep1.2em
+        \item $\mathcal{S}_\ell$: Each coalition $S \subseteq [d]$ where $0 \leq |S| \leq \ell$
+        \item $d_{\ell} \defeq \sum_{j=0}^{\ell} \binom{d}{j}$: The number of possible coalitions at level $\ell$
+        \item $\ex(\f, \ell) \in \R^{d_\ell}$: The importance quantity at level $\ell$
     \end{itemize}
 \end{itemize}
-
 \end{frame}
 %===
 \section[Axioms]{Axioms}
@@ -142,24 +147,70 @@
     \end{myaxiombox}
 \end{frame}
 %===
-\begin{frmae}
+\begin{frame}
+    \begin{myaxiombox}{Interaction Symmetry}
+        For any maximum interaction order $\ell \in [d]$, and for any set function $\f:2^d \mapsto \R$ that is symmetric with respect to elements $i, j \in [d]$, so that
+$\f(S \! \cup  i) = \f(S \! \cup  j) \!$ for any $S \subseteq [d] \backslash \{i,j\}$, the interaction index satisfies: $\ex_{T \cup i}(\f,\ell) = \ex_{ T \cup j}(\f,\ell)$ for any $T \subseteq [d] \backslash \{i,j\}$ with $|T| < \ell$.
+    \end{myaxiombox}
 
+\end{frame}
+
+
+%===
+\begin{frame}
+    \begin{myaxiombox}{Interaction Dummy}
+        For any maximum interaction order $\ell \in [d]$, and for any set function $\f:2^d \mapsto \R$ such that $\f(S \cup i) = \f(S)$ for some $i \in [d]$ and for all $ S \subseteq [d] \backslash \{i\}$, the interaction index satisfies:  $\ex_{T}(\f, \ell) = 0$ for all $T \in \mathcal{S}_\ell$ with $i \in T$.
+    \end{myaxiombox}
+\end{frame}
+%===
+\begin{frame}
+    \begin{myaxiombox}{Interaction Efficiency}
+        For any maximum interaction order $\ell \in [d]$, and for any set function $\f:2^d \rightarrow \R$, the interaction index satisfies: $\sum_{S \in \mathcal{S}_\ell\backslash\text{\O}} \ex_S(\f,\ell) = \f([d]) - \f(\text{\O})$ and $\ex_{\text{\O}}(\f,\ell) = \f(\text{\O})$.
+    \end{myaxiombox}
+\end{frame}
+%===
+\section[Interaction index]{Interaction index}
+
+\begin{frame}
     
-
+\end{frame}
+%===
+\begin{frame}
     
-\end{frmae}
-
-
+\end{frame}
 %===
-
 %===
-
+\begin{frame}
+    
+\end{frame}
 %===
-
+\begin{frame}
+    
+\end{frame}
 %===
-
+\begin{frame}
+    
+\end{frame}
 %===
-
-
+\begin{frame}
+    
+\end{frame}
+%===
+\begin{frame}
+    
+\end{frame}
+%===
+\begin{frame}
+    
+\end{frame}
+%===
+\begin{frame}
+    
+\end{frame}
+%===
+\begin{frame}
+    
+\end{frame}
 
 \end{document}
+
