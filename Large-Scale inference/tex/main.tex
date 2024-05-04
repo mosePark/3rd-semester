@@ -8,7 +8,7 @@
 \usecolortheme{aggie}
 
 \usepackage{appendixnumberbeamer}
-
+\usepackage{tcolorbox} % 내 설정
 \usepackage{booktabs}
 \usepackage[scale=2]{ccicons}
 
@@ -17,6 +17,39 @@
 
 \usepackage{xspace}
 \newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
+\newcommand{\printfnsymbol}[1]{%
+  \textsuperscript{\@fnsymbol{#1}}%
+}
+\makeatother
+\newenvironment{callig}{\fontfamily{qcr}\selectfont}{}
+\newcommand{\textcallig}[1]{{\callig#1}}
+\newcommand{\f}{v}
+\newcommand{\g}{g}
+\newcommand{\hY}{\hat{y}}
+\newcommand{\x}{x}
+\newcommand{\z}{z}
+\newcommand{\I}{\delta}
+%\newcommand{\R}{\mathbb{R}}
+\newcommand{\expd}{\text{\textcallig{p}}}
+\newcommand{\ex}{\Expl}
+\newcommand{\prodd}{\Upsilon}
+\def\Expl{\mathcal{E}}
+\newcommand{\e}{\mathbf{e}}
+\newcommand{\m}{m}
+\newcommand{\M}{M}
+\newcommand{\bfalpha}{\mathbf{\alpha}}
+\newcommand{\veck}{\mathbf{k}}
+\newcommand*{\medcup}{\mathbin{\scalebox{1.5}{\ensuremath{\cup}}}}
+\newcommand{\mubar}[1]{\bar{\mu}_{#1}}
+\newcommand{\setlessell}{\mathcal{S}_\ell }
+\newcommand{\bfb}{\mathbf{b} }
+\DeclareMathOperator{\spann}{span}
+\DeclareMathOperator{\calA}{\mathcal{A}}
+\newcommand*{\defeq}{\stackrel{\text{def}}{=}}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
 
 % start == Title Page %%%
 \title{Faith-SHAP}
@@ -29,18 +62,103 @@
 % \titlegraphic{\hfill\includegraphics[height=1.5cm]{logo.pdf}}
 % end == Title Page %%%
 
+%%% def axiom box
+% 사용자 정의 tcolorbox 환경을 만듭니다.
+\newtcolorbox{myaxiombox}[2][]{%
+    title=#2,
+    colback=white,
+    colframe=red!50!black,
+    coltitle=white,
+    fonttitle=\bfseries,
+    rounded corners,
+    boxsep=5pt,
+    boxrule=1pt,
+    #1 % 추가 옵션을 위한 공간
+}
 
 
+%%%
 \begin{document}
 
 \maketitle
 
-% start == Index Page %%%
+%===
 \begin{frame}{Table of contents}
   \setbeamertemplate{section in toc}[sections numbered]
   \tableofcontents%[hideallsubsections]
 \end{frame}
-% end == Index Page %%%
+%===
+
+
+\section[Intro]{Introduction}
+
+
+%===
+\begin{frame}{Coalition game}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{fig/coalition-game.png}
+\caption{coalition game}
+\label{fig:coalition-game}
+\end{figure}
+  
+\end{frame}
+
+
+\def\model{f}
+\def\X{\mathcal{X}}
+\def\R{\mathbb{R}}
+%===
+\begin{frame}{Notation}
+
+\begin{itemize}
+    \item $\model : \X \mapsto \mathbb{R}$ with $\X \subseteq \R^d$ : A black-box model
+    \vspace{2mm}
+    \item $\f_{\x} : 2^d \rightarrow \mathbb{R}$ : A set function
+    \vspace{2mm}
+    \item $\ell \in [d]$ : The importance of interactions between features
+    \vspace{2mm}
+    \item $\ex$ : The importance function
+    \vspace{2mm}
+    \item $\ex(\f, \ell) = (\ex_{S}(\f, \ell))_{S \in \mathcal{S}_\ell} \in \R^{d_\ell}$
+    \vspace{2mm}
+    \begin{itemize}
+      \item $\mathcal{S}_\ell$: Each coalition $S \subseteq [d]$ where $0 \leq |S| \leq \ell$
+      \vspace{2mm}
+      \item $d_{\ell} \defeq \sum_{j=0}^{\ell} { d \choose j}$: The number of possible coalitions at level $\ell$
+      \vspace{2mm}
+      \item $\ex(\f, \ell) \in \R^{d_\ell}$: The importance quantity at level $\ell$
+    \end{itemize}
+\end{itemize}
+
+\end{frame}
+%===
+\section[Axioms]{Axioms}
+
+\begin{frame}{Axioms}
+    \begin{myaxiombox}{Interaction Linearity}
+    For any maximum interaction order $\ell \in [d]$, and for any two set functions $\f_1$ and $\f_2$, and any two scalars $\alpha_1, \alpha_2 \in \mathbb{R}$, the interaction index satisfies: $\ex(\alpha_1 \f_1+ \alpha_2 \f_2,\ell) = \alpha_1 \ex(\f_1,\ell) + \alpha_2 \ex(\f_2,\ell)$.
+    \end{myaxiombox}
+\end{frame}
+%===
+\begin{frmae}
+
+    
+
+    
+\end{frmae}
+
+
+%===
+
+%===
+
+%===
+
+%===
+
+%===
 
 
 
