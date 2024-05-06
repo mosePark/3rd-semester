@@ -219,8 +219,28 @@ $\f(S \! \cup  i) = \f(S \! \cup  j) \!$ for any $S \subseteq [d] \backslash \{i
     \end{mydefbox}
 \end{frame}
 %===
+\begin{frame}{Faith-Interaction Indices}
+    \textbf{Singleton Attributions to Interaction Indices} : \\
+    Let value function with $S$, \[\f(S) \approx \sum_{T \subseteq S, |T| \leq \ell} \Expl_T(\f,\ell),\; \forall S \subseteq [d].\]
+    And then, we consider the following weghted regression problem,
+    \begin{equation*}
+    \label{eqn:weighted_regression}
+    \ex(\f, \ell) \ = \argmin_{\Expl \subseteq \mathbb{R}^{d_\ell} } 
+    \sum_{S \subseteq [d]}  \mu(S) \left( \f(S) - \sum_{T \subseteq S , |T| \leq \ell}\Expl_T(\f,\ell) \right)^2,
+    \tag{9}
+    \end{equation*}
+    % weighting fuction이 무엇인지 설명 넣어주고 제약이 들어간 최적화 문제로 다시 설명할 것. (다음 페이지)
+\end{frame}
+%===
 \begin{frame}
-    
+    Finally, we can induce as solving the constrained problem:
+    \begin{align*}
+    \ex(\f, \ell) \ 
+    &= \argmin_{\Expl \subseteq \mathbb{R}^{d_\ell} } \sum_{S \subseteq [d]\,:\, \mu(S) < \infty}  \mu(S) \left( \f(S) - \sum_{T \subseteq S , |T| \leq \ell}\Expl_T(\f,\ell) \right)^2 \nonumber \\
+    \text{s.t.} \ & \f(S) = \sum_{T \subseteq S , |T| \leq \ell}\Expl_T(\f,\ell), \;\;\forall S :\, \mu(S) = \infty.
+    \label{eqn:constrained_weighted_regresion}
+    \tag{10}
+    \end{align*}
 \end{frame}
 %===
 \begin{frame}
@@ -242,13 +262,15 @@ $\f(S \! \cup  i) = \f(S \! \cup  j) \!$ for any $S \subseteq [d] \backslash \{i
 \begin{frame}
     
 \end{frame}
-%===
-\begin{frame}
-    
-\end{frame}
+
+
+
+
+
 
 
 %===
 \end{document}
+
 
 
