@@ -77,6 +77,18 @@
     #1 % 추가 옵션을 위한 공간
 }
 
+\newtcolorbox{mydefbox}[2][]{%
+    title=#2,
+    colback=white,
+    colframe=red!50!gray, % 여기에 오타 수정
+    coltitle=white,
+    fonttitle=\bfseries,
+    rounded corners,
+    boxsep=5pt,
+    boxrule=1pt,
+    #1 % 추가 옵션을 위한 공간
+}
+
 
 %%%
 \begin{document}
@@ -170,47 +182,73 @@ $\f(S \! \cup  i) = \f(S \! \cup  j) \!$ for any $S \subseteq [d] \backslash \{i
 \end{frame}
 %===
 \section[Interaction index]{Interaction index}
+%===
+\begin{frame}{Interaction index}
+    \begin{mydefbox}{Shapley Interaction Index}
+        \begin{equation*}
+            \label{eqn:closed_form_shap_inter}
+            \ex_S^{\text{Shap}}(\f, \ell) =  \sum_{T \subseteq [d]/ S}  \frac{|T|! (d-|S|-|T|)!}{(d-|S|+1)!} \Delta_S(\f(T)),\ \ \  
+            \forall S \in \setlessell.
+            \tag{5}
+        \end{equation*}
+    \end{mydefbox}
+\end{frame}
+%===
+\begin{frame}
+    \begin{mydefbox}{Banzhaf Interaction Index}
+        \begin{equation*}
+            \label{eqn:closed_form_bzf_inter}
+            \ex^{\text{Bzf}}_S(\f,\ell) =  \sum_{T \subseteq [d]/S}  \frac{1}{2^{d-|S|}} \Delta_S(\f(T)),\ \ \  
+            \forall  S \in \setlessell.
+            \tag{6}
+        \end{equation*}
+    \end{mydefbox}
+\end{frame}
+%===
+\begin{frame}
+    \begin{mydefbox}{Shapley Taylor Interaction Index}
+        \begin{equation*}
+            \label{eqn:def_taylor_shap}
+            \ex_S^{\text{Taylor}}(\f,\ell) = 
+            \begin{cases}
+            \Delta_S(\f(\text{\O})) & \text{, if } |S| < \ell. \\
+            \sum_{T \subseteq [d]/ S}  \frac{|T|!(d-|T|-1)!|S|}{d!} \Delta_S(\f(T)) & \text{, if } |S| = \ell. \\
+            \end{cases}
+            \tag{7}
+        \end{equation*}
+    \end{mydefbox}
+\end{frame}
+%===
+\begin{frame}
+    
+\end{frame}
+%===
+\begin{frame}
+    
+\end{frame}
+%===
+\begin{frame}
+    
+\end{frame}
+%===
+\begin{frame}
+    
+\end{frame}
+%===
+\begin{frame}
+    
+\end{frame}
+%===
+\begin{frame}
+    
+\end{frame}
+%===
+\begin{frame}
+    
+\end{frame}
 
-\begin{frame}
-    
-\end{frame}
-%===
-\begin{frame}
-    
-\end{frame}
-%===
-%===
-\begin{frame}
-    
-\end{frame}
-%===
-\begin{frame}
-    
-\end{frame}
-%===
-\begin{frame}
-    
-\end{frame}
-%===
-\begin{frame}
-    
-\end{frame}
-%===
-\begin{frame}
-    
-\end{frame}
-%===
-\begin{frame}
-    
-\end{frame}
-%===
-\begin{frame}
-    
-\end{frame}
-%===
-\begin{frame}
-    
-\end{frame}
 
+%===
 \end{document}
+
 
