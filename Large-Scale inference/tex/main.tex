@@ -9,11 +9,18 @@
 
 \usepackage{appendixnumberbeamer}
 \usepackage{tcolorbox} % 내 설정
+\tcbuselibrary{breakable}
 \usepackage{booktabs}
 \usepackage[scale=2]{ccicons}
 
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{enumitem}
 
+\usepackage{amssymb}
+\usepackage{graphicx}
 \usepackage{pgfplots}
+
 \usepgfplotslibrary{dateplot}
 
 \usepackage{xspace}
@@ -52,18 +59,20 @@
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
 
 
+
 % start == Title Page %%%
 \title{Faith-SHAP}
-\subtitle{Faith-Shap: The Faithful Shapley Interaction Index}
+\subtitle{The Faithful Shapley Interaction Index}
 % \date{\today}
 \date{May 14, 2024}
 \author{mose Park}
-\institute{    Department of Statistical Data Science \\
+\institute{Department of Statistical Data Science \\
     University of Seoul}
-% \titlegraphic{\hfill\includegraphics[height=1.5cm]{logo.pdf}}
+\vfuzz=20pt
+\hfuzz=10pt
 % end == Title Page %%%
 
-%%% def axiom box
+%%% box
 % 사용자 정의 tcolorbox 환경을 만듭니다.
 \newtcolorbox{myaxiombox}[2][]{%
     title=#2,
@@ -89,6 +98,17 @@
     #1 % 추가 옵션을 위한 공간
 }
 
+\newtcolorbox{mytheorembox}[2][]{%
+    title=#2,
+    colback=white,
+    colframe=red!50!gray, % 여기에 오타 수정
+    coltitle=white,
+    fonttitle=\bfseries,
+    rounded corners,
+    boxsep=5pt,
+    boxrule=1pt,
+    #1 % 추가 옵션을 위한 공간
+}
 
 %%%
 \begin{document}
@@ -132,6 +152,9 @@
 \def\model{f}
 \def\X{\mathcal{X}}
 \def\R{\mathbb{R}}
+\def\g{g}
+\def\Expl{\mathcal{E}}
+
 %===
 \begin{frame}{Notation}
 \begin{itemize}
@@ -157,6 +180,10 @@
     \begin{myaxiombox}{Interaction Linearity}
     For any maximum interaction order $\ell \in [d]$, and for any two set functions $\f_1$ and $\f_2$, and any two scalars $\alpha_1, \alpha_2 \in \mathbb{R}$, the interaction index satisfies: $\ex(\alpha_1 \f_1+ \alpha_2 \f_2,\ell) = \alpha_1 \ex(\f_1,\ell) + \alpha_2 \ex(\f_2,\ell)$.
     \end{myaxiombox}
+    \begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
+        \item Additivity + homogeneity
+        \item Examples : Expectation, Matrix etc.
+    \end{itemize}
 \end{frame}
 %===
 \begin{frame}
@@ -164,7 +191,10 @@
         For any maximum interaction order $\ell \in [d]$, and for any set function $\f:2^d \mapsto \R$ that is symmetric with respect to elements $i, j \in [d]$, so that
 $\f(S \! \cup  i) = \f(S \! \cup  j) \!$ for any $S \subseteq [d] \backslash \{i,j\}$, the interaction index satisfies: $\ex_{T \cup i}(\f,\ell) = \ex_{ T \cup j}(\f,\ell)$ for any $T \subseteq [d] \backslash \{i,j\}$ with $|T| < \ell$.
     \end{myaxiombox}
-
+        \begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
+        \item 
+        \item 
+    \end{itemize}
 \end{frame}
 
 
@@ -207,17 +237,19 @@ $\f(S \! \cup  i) = \f(S \! \cup  j) \!$ for any $S \subseteq [d] \backslash \{i
 %===
 \begin{frame}
     \begin{mydefbox}{Shapley Taylor Interaction Index}
-        \begin{equation*}
-            \label{eqn:def_taylor_shap}
-            \ex_S^{\text{Taylor}}(\f,\ell) = 
+        {\small
+        \begin{align*}
+            \ex_S^{\text{Taylor}}(\f,\ell) &= 
             \begin{cases}
-            \Delta_S(\f(\text{\O})) & \text{, if } |S| < \ell. \\
-            \sum_{T \subseteq [d]/ S}  \frac{|T|!(d-|T|-1)!|S|}{d!} \Delta_S(\f(T)) & \text{, if } |S| = \ell. \\
+                \Delta_S(\f(\text{\O})) & \text{if } |S| < \ell, \\
+                \sum_{T \subseteq [d] \setminus S} \frac{|T|!(d-|T|-1)!|S|}{d!} \Delta_S(\f(T)) & \text{if } |S| = \ell.
             \end{cases}
             \tag{7}
-        \end{equation*}
+        \end{align*}
+        }
     \end{mydefbox}
 \end{frame}
+
 %===
 \begin{frame}{Faith-Interaction Indices}
     \textbf{Singleton Attributions to Interaction Indices} : \\
@@ -282,8 +314,9 @@ $\f(S \! \cup  i) = \f(S \! \cup  j) \!$ for any $S \subseteq [d] \backslash \{i
 \end{frame}
 %===
 \begin{frame}
-    \begin{proof}
-        Suppose that $\exist$ two minimizers $\ex_1(\f,\ell)$ and $\ex_2(\f,\ell)$. \\
+    \begin{proof}[Contd.]
+        \vspace{0.3cm}
+        Suppose that $\exists$ two minimizers $\ex_1(\f,\ell)$ and $\ex_2(\f,\ell)$. \\
         Since $\ex_1(\f,\ell)$ and $\ex_2(\f,\ell)$ both satisfy the set of linear equations. However, since we have a strictly convex objective,
         $$
         F(\ex) = \sum  \mu'(S) \left( \f(S) - \sum\Expl_T(\f,\ell) \right)^2,
@@ -318,8 +351,41 @@ $\f(S \! \cup  i) = \f(S \! \cup  j) \!$ for any $S \subseteq [d] \backslash \{i
     \end{myaxiombox}
 \end{frame}
 %===
-\begin{frame}
-    
+\begin{frame}{Theorem 16}
+    \begin{mytheorembox}{Weighting Function Form}
+        Faith-Interaction indices $\Expl$ with $\mu(S) < \infty$ satisfy linearity, symmetry and dummy axioms.
+        \vspace{1em}
+        \[ \iff
+        \mu(S) \propto \sum_{i=|S|}^{d} \binom{d- |S|}{i-|S|}(-1)^{i-|S|} g(a,b,i) 
+        \]
+
+    \end{mytheorembox}
+    \begin{align*}
+        \text{ where }
+        g(a,b,i) =
+        \begin{cases}
+            1 & \text{ if } \ i = 0 \\
+            \prod_{j=0}^{j=i-1} \frac{a(a-b) + j(b-a^2)}{a-b + j(b-a^2)}
+            & \text{ if } \   1 \leq i \leq d,\\
+        \end{cases}
+    \end{align*}
+\end{frame}
+%===
+\begin{frame}{Proposition 18}
+    \begin{myaxiombox}{Faith-Interaction indices are efficiency?}
+        
+    \end{myaxiombox}
+\end{frame}
+%===
+\begin{frame}{Faith-SHAP : Faithful Shapley Interaction index}
+    by Theorem 19,
+    \begin{equation*}
+    \label{eqn:faith_shapley_highest_order}
+    \Expl_S^{\text{F-Shap}}(\f,\ell) = \frac{(2\ell -1)!}{((\ell-1)!)^2}
+    \sum_{T \subseteq [d] \setminus S}\frac{(\ell+|T|-1)!(d-|T|-1)!}{(d+\ell-1)!}   \Delta_S(\f(T))
+    \ \ 
+    \end{equation*}
+    $\text{for all } S \in \{ S \subseteq [d] : |S| = \ell \}.$
 \end{frame}
 %===
 \begin{frame}
@@ -337,99 +403,12 @@ $\f(S \! \cup  i) = \f(S \! \cup  j) \!$ for any $S \subseteq [d] \backslash \{i
 \begin{frame}
     
 \end{frame}
-%===
-\begin{frame}
-    
-\end{frame}
-%===
-\begin{frame}
-    
-\end{frame}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
 %===
 \end{document}
+
 
 
 
