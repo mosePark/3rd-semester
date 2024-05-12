@@ -131,6 +131,14 @@
     \end{figure}
 \end{frame}
 %===
+\begin{frame}
+    \begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{fig/overview2.png}
+    \caption{overview}
+    \end{figure}
+\end{frame}
+%===
 
 
 \section[Intro]{Introduction}
@@ -180,6 +188,7 @@
     \begin{myaxiombox}{Interaction Linearity}
     For any maximum interaction order $\ell \in [d]$, and for any two set functions $\f_1$ and $\f_2$, and any two scalars $\alpha_1, \alpha_2 \in \mathbb{R}$, the interaction index satisfies: $\ex(\alpha_1 \f_1+ \alpha_2 \f_2,\ell) = \alpha_1 \ex(\f_1,\ell) + \alpha_2 \ex(\f_2,\ell)$.
     \end{myaxiombox}
+    \vspace{1.5em}
     \begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
         \item Additivity + homogeneity
         \item Examples : Expectation, Matrix etc.
@@ -187,23 +196,48 @@
 \end{frame}
 %===
 \begin{frame}
+    \begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{fig/linear.png}
+    \end{figure}
+\end{frame}
+
+
+%===
+\begin{frame}
     \begin{myaxiombox}{Interaction Symmetry}
         For any maximum interaction order $\ell \in [d]$, and for any set function $\f:2^d \mapsto \R$ that is symmetric with respect to elements $i, j \in [d]$, so that
 $\f(S \! \cup  i) = \f(S \! \cup  j) \!$ for any $S \subseteq [d] \backslash \{i,j\}$, the interaction index satisfies: $\ex_{T \cup i}(\f,\ell) = \ex_{ T \cup j}(\f,\ell)$ for any $T \subseteq [d] \backslash \{i,j\}$ with $|T| < \ell$.
     \end{myaxiombox}
-        \begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
-        \item 
-        \item 
+    \begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
+        \item i, j : exchangeability and same importance
     \end{itemize}
 \end{frame}
-
+%===
+\begin{frame}
+    \begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{fig/symmetry.png}
+    \end{figure}
+\end{frame}
 
 %===
 \begin{frame}
     \begin{myaxiombox}{Interaction Dummy}
         For any maximum interaction order $\ell \in [d]$, and for any set function $\f:2^d \mapsto \R$ such that $\f(S \cup i) = \f(S)$ for some $i \in [d]$ and for all $ S \subseteq [d] \backslash \{i\}$, the interaction index satisfies:  $\ex_{T}(\f, \ell) = 0$ for all $T \in \mathcal{S}_\ell$ with $i \in T$.
     \end{myaxiombox}
+    \begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
+        \item No pain, No gain
+    \end{itemize}
 \end{frame}
+%===
+\begin{frame}
+    \begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{fig/dummy.png}
+    \end{figure}
+\end{frame}
+
 %===
 \begin{frame}
     \begin{myaxiombox}{Interaction Efficiency}
@@ -211,6 +245,14 @@ $\f(S \! \cup  i) = \f(S \! \cup  j) \!$ for any $S \subseteq [d] \backslash \{i
     \end{myaxiombox}
 \end{frame}
 %===
+%===
+\begin{frame}
+    \begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{fig/effi.png}
+    \end{figure}
+\end{frame}
+
 \section[Interaction index]{Interaction index}
 %===
 \begin{frame}{Interaction index}
@@ -222,6 +264,24 @@ $\f(S \! \cup  i) = \f(S \! \cup  j) \!$ for any $S \subseteq [d] \backslash \{i
             \tag{5}
         \end{equation*}
     \end{mydefbox}
+    \vspace{1.5em}
+    \begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
+        \item Calculating weights considering the order.
+        \item Discrete derivatve means a pure interaction effect. (Def.1)
+    \end{itemize}
+\end{frame}
+%===
+\begin{frame}
+    \begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{fig/deri.png}
+    \end{figure}
+    \vspace{1.5em}
+    \begin{itemize}
+        \item By subtracting the individual effects, we can isolate the pure effect.
+        \item The reason for having a multiplication by -1
+        
+    \end{itemize}
 \end{frame}
 %===
 \begin{frame}
@@ -233,6 +293,10 @@ $\f(S \! \cup  i) = \f(S \! \cup  j) \!$ for any $S \subseteq [d] \backslash \{i
             \tag{6}
         \end{equation*}
     \end{mydefbox}
+    \vspace{1.5em}
+    \begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
+        \item Assigning uniform weights
+    \end{itemize}
 \end{frame}
 %===
 \begin{frame}
@@ -248,6 +312,10 @@ $\f(S \! \cup  i) = \f(S \! \cup  j) \!$ for any $S \subseteq [d] \backslash \{i
         \end{align*}
         }
     \end{mydefbox}
+    \vspace{1.5em}
+    \begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
+        \item Selecting the maximum order l is important.
+    \end{itemize}
 \end{frame}
 
 %===
@@ -261,6 +329,11 @@ $\f(S \! \cup  i) = \f(S \! \cup  j) \!$ for any $S \subseteq [d] \backslash \{i
     \sum_{S \subseteq [d]}  \mu(S) \left( \f(S) - \sum_{T \subseteq S , |T| \leq \ell}\Expl_T(\f,\ell) \right)^2,
     \tag{9}
     \end{equation*}
+    \vspace{1.5em}
+    \begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
+        \item Under variables d, solve $2^d$ linear equalites.
+        \item Therefore, consider approximation. 
+    \end{itemize}
     % weighting fuction이 무엇인지 설명 넣어주고 제약이 들어간 최적화 문제로 다시 설명할 것. (다음 페이지)
     % 변수가 d, 선형등식이 2^d여서 정확한 해를 구하기가 힘듬. 따라서 approximation. (overdetermined system)
 \end{frame}
@@ -282,7 +355,10 @@ $\f(S \! \cup  i) = \f(S \! \cup  j) \!$ for any $S \subseteq [d] \backslash \{i
         have a unique minimizer.
     \end{myaxiombox}
     % def 10 : proper <=> mu function < inf
-
+    \vspace{1.5em}
+    \begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
+        \item A Unique minimzer = A Unique solution.
+    \end{itemize}
 \end{frame}
 %===
 \begin{frame}
@@ -335,20 +411,37 @@ $\f(S \! \cup  i) = \f(S \! \cup  j) \!$ for any $S \subseteq [d] \backslash \{i
 %===
 \begin{frame}{Proposition 13}
     \begin{myaxiombox}{Faith-Interaction indices are linearity?}
-        
+         Faith-Interaction indices satisfy the interaction linearity axiom.
     \end{myaxiombox}
+    \vspace{1.5em}
+    \begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
+        \item If weighting function is finite, $\ex$ has a linear relation.
+        \item If weighting function is not finite, constrained optimization.    \item → Lagrange multiplier.
+    \end{itemize}
 \end{frame}
 %===
 \begin{frame}{Proposition 14}
     \begin{myaxiombox}{Faith-Interaction indices are symmetry?}
-        
+        Faith-Interaction indices are symmetry.
+        \[\iff\]
+        \begin{itemize}
+            \item Weighting functions are permutaion invariant.
+            \item And only depend on $|S|$.
+        \end{itemize}
     \end{myaxiombox}
+    \begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
+        \item Sufficient Condition : Using the fact that $\exists$ a unique minimizer.
+    \end{itemize}
 \end{frame}
 %===
 \begin{frame}{Proposition 15}
     \begin{myaxiombox}{Faith-Interaction indices are dummy?}
-        
+        Faith-Interaction indices $\Expl$ satisfy the interaction dummy axiom if the \textbf{features behave independently} of each other when forming coalitions $\text{ s.t. }$ as $\mu(S) \propto \prod_{i \in S} p_i \prod_{j \not \in S} (1-p_j)$ for all $S \subseteq [d]$.
     \end{myaxiombox}
+    \begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
+        \item $0 < p_i < 1$ is the probability of the feature $i$ to be present.
+    \end{itemize}
+    % 증명의 방식을 대충 요약하자면, feature들이 독립이라는 성질을 활용해 영향을 주지 않는 feature 하나를 제거함으로써 목적식을 축소하고 두 목적식의 해를 비교해서 하나 줄어들었던 단일 영향력을 0이라는 것을 보여주는걸로 증명함.
 \end{frame}
 %===
 \begin{frame}{Theorem 16}
@@ -373,7 +466,8 @@ $\f(S \! \cup  i) = \f(S \! \cup  j) \!$ for any $S \subseteq [d] \backslash \{i
 %===
 \begin{frame}{Proposition 18}
     \begin{myaxiombox}{Faith-Interaction indices are efficiency?}
-        
+        Faith-Interaction indices satisfy the interaction efficiency axiom $\iff$
+        the weighting functions satisfy $\mu(\text{\O}) = \mu([d]) = \infty$.
     \end{myaxiombox}
 \end{frame}
 %===
@@ -388,7 +482,15 @@ $\f(S \! \cup  i) = \f(S \! \cup  j) \!$ for any $S \subseteq [d] \backslash \{i
     $\text{for all } S \in \{ S \subseteq [d] : |S| = \ell \}.$
 \end{frame}
 %===
-\begin{frame}
+\begin{frame}{Example}
+    \begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{fig/icecream.png}
+    \end{figure}
+    \begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
+        \item maximum order $l$ = 3
+        \item interaction index(m, c) = v(m) + v(c) - v(m,c)
+    \end{itemize}
     
 \end{frame}
 %===
@@ -408,6 +510,7 @@ $\f(S \! \cup  i) = \f(S \! \cup  j) \!$ for any $S \subseteq [d] \backslash \{i
 
 %===
 \end{document}
+
 
 
 
