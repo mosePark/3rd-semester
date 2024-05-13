@@ -16,10 +16,13 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{enumitem}
-
+\usepackage{ltablex}
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{pgfplots}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
 
 \usepgfplotslibrary{dateplot}
 
@@ -169,7 +172,7 @@
     \itemsep1.5em % 더 큰 간격으로 각 항목 사이의 공간을 일정하게 조정
     \item $\model : \X \mapsto \mathbb{R}$, where $\X \subseteq \R^d$: A black-box model
     \item $\f_{\x} : 2^d \rightarrow \mathbb{R}$: A set function
-    \item $\ell \in [d]$: The importance of interactions between features
+    \item $\ell \in [d]$: The maximum interaction order
     \item $\ex$: The importance function
     \item $\ex(\f, \ell) = (\ex_{S}(\f, \ell))_{S \in \mathcal{S}_\ell} \in \R^{d_\ell}$
     \begin{itemize}
@@ -319,6 +322,7 @@ $\f(S \! \cup  i) = \f(S \! \cup  j) \!$ for any $S \subseteq [d] \backslash \{i
 \end{frame}
 
 %===
+
 \begin{frame}{Faith-Interaction Indices}
     \textbf{Singleton Attributions to Interaction Indices} : \\
     Let value function with $S$, \[\f(S) \approx \sum_{T \subseteq S, |T| \leq \ell} \Expl_T(\f,\ell),\; \forall S \subseteq [d].\]
@@ -347,6 +351,12 @@ $\f(S \! \cup  i) = \f(S \! \cup  j) \!$ for any $S \subseteq [d] \backslash \{i
     \label{eqn:constrained_weighted_regresion}
     \tag{10}
     \end{align*}
+    \vspace{2em}
+    \begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
+        \item $\mu()$ can be interpreted as the importance of different coalitions.
+        \item Why $\mu$ equal to inf constraint?
+        \item Since, we can deal with approximation, we will control 
+    \end{itemize}
 \end{frame}
 %===
 \begin{frame}{Proposition 26}
@@ -387,6 +397,7 @@ $\f(S \! \cup  i) = \f(S \! \cup  j) \!$ for any $S \subseteq [d] \backslash \{i
     \renewcommand{\qedsymbol}{} % QED 기호 없애기
     \end{proof}
 
+    
 \end{frame}
 %===
 \begin{frame}
@@ -398,7 +409,7 @@ $\f(S \! \cup  i) = \f(S \! \cup  j) \!$ for any $S \subseteq [d] \backslash \{i
         F(\ex) = \sum  \mu'(S) \left( \f(S) - \sum\Expl_T(\f,\ell) \right)^2,
         $$
         we have $F(\ex_1) + F(\ex_2) > \frac{F((\ex_1+\ex_2)/2)}{2}$ : \textbf{Contradiction} \\
-        Therefore, we have a unique minimizer for Eqn (10).
+        Therefore, we have a unique minimizer for Eq (10).
     \end{proof}
 \end{frame}
 
@@ -407,7 +418,7 @@ $\f(S \! \cup  i) = \f(S \! \cup  j) \!$ for any $S \subseteq [d] \backslash \{i
 % prop 14 faith interaction index : 대칭성
 % prop 15 faith interaction index : 더미
 
-\section[Faith interaction index]{Faith indices}
+\section[Faith Interaction Index]{Faith Interaction Index}
 %===
 \begin{frame}{Proposition 13}
     \begin{myaxiombox}{Faith-Interaction indices are linearity?}
@@ -425,7 +436,7 @@ $\f(S \! \cup  i) = \f(S \! \cup  j) \!$ for any $S \subseteq [d] \backslash \{i
         Faith-Interaction indices are symmetry.
         \[\iff\]
         \begin{itemize}
-            \item Weighting functions are permutaion invariant.
+            \item Weighting functions are permutation invariant.
             \item And only depend on $|S|$.
         \end{itemize}
     \end{myaxiombox}
@@ -469,6 +480,9 @@ $\f(S \! \cup  i) = \f(S \! \cup  j) \!$ for any $S \subseteq [d] \backslash \{i
         Faith-Interaction indices satisfy the interaction efficiency axiom $\iff$
         the weighting functions satisfy $\mu(\text{\O}) = \mu([d]) = \infty$.
     \end{myaxiombox}
+    \begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
+        \item Sufficient condition : Since constraint, the condition is trivial.
+    \end{itemize}
 \end{frame}
 %===
 \begin{frame}{Faith-SHAP : Faithful Shapley Interaction index}
@@ -482,7 +496,7 @@ $\f(S \! \cup  i) = \f(S \! \cup  j) \!$ for any $S \subseteq [d] \backslash \{i
     $\text{for all } S \in \{ S \subseteq [d] : |S| = \ell \}.$
 \end{frame}
 %===
-\begin{frame}{Example}
+\begin{frame}{Example : Simulation}
     \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{fig/icecream.png}
@@ -495,21 +509,88 @@ $\f(S \! \cup  i) = \f(S \! \cup  j) \!$ for any $S \subseteq [d] \backslash \{i
 \end{frame}
 %===
 \begin{frame}
-    
+    \begin{equation}
+    \label{eqn:example1}
+    \f(S) = 
+    \begin{cases}
+    0  & \text{ , if } |S| \leq 1. \\
+    |S| - p \times { |S| \choose 2 }  & \text{ , otherwise.} \\
+    \end{cases}
+    \tag{18}
+\end{equation}
+\vspace{2em}
+\begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
+    \item 11 features, Each person contributes 1 unit.
+    \item marginal utility → decreasing
+    \item since, a probability of p of being non-cooperative.
+\end{itemize}
 \end{frame}
 %===
 \begin{frame}
-    
+
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=\textwidth]{fig/example.png}
+    \end{figure}
+\end{frame}
+
+\section[Experiment]{Experiment}
+%===
+\begin{frame}{Set up}
+    \begin{figure}
+        \centering
+        \includegraphics[width=1.01\textwidth]{fig/dataset.png}
+    \end{figure}
 \end{frame}
 %===
-\begin{frame}
-    
+\begin{frame}{Computational Efficiency}
+    \begin{figure}
+    \centering
+    \includegraphics[width=0.9\textwidth]{fig/runtime.png}
+    \end{figure}
+    \begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
+        \item Run-time comparison
+        \item Not faith method : permutation algorithm
+        % \item IMDB : 50 random samples, d = 15 words, l = 2
+        % \item marketing : d = 17 features tabular dataset
+    \end{itemize}
 \end{frame}
+%===
+
+\begin{frame}{Explanations on a Language}
+
+
+\begin{table}[h!]
+\scriptsize % 테이블의 글씨 크기를 더 작게 조절합니다.
+\keepXColumns % tabularx의 X 컬럼이 제공하는 기능을 유지합니다.
+\begin{tabularx}{\linewidth}{m{0.05\linewidth}|X|m{0.1\linewidth}|m{0.1\linewidth}} 
+\toprule
+Index & Sentences & Prediction & Interaction score \\
+\midrule
+1 & I have \textbf{Never forgot} this movie. All these years and it has remained in my life. & Positive & 0.818 \\
+\midrule
+2 & TWINS EFFECT is a poor film in so many respects. The \textbf{only good} element is that it doesn't take itself seriously.. & Negative & -0.375 \\
+\midrule
+3 & I rented this movie to get an easy, entertained view of the history of Texas. I got a \textbf{headache instead}. & Negative & 0.396 \\
+\midrule
+4 & Truly \textbf{appalling waste} of space. Me and my friend tried to watch this film to its conclusion but had to switch it off about 30 minutes from the end. & Negative & 0.357 \\
+\midrule
+5 & I still remember watching Satya for the first time. I was completely \textbf{blown away}. & Positive & 0.283 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+
+\end{frame}
+
+
+
 
 
 
 %===
 \end{document}
+
 
 
 
