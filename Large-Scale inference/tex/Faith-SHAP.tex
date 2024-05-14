@@ -171,7 +171,7 @@
 \begin{itemize}
     \itemsep1.5em % 더 큰 간격으로 각 항목 사이의 공간을 일정하게 조정
     \item $\model : \X \mapsto \mathbb{R}$, where $\X \subseteq \R^d$: A black-box model
-    \item $\f_{\x} : 2^d \rightarrow \mathbb{R}$: A set function
+    \item $\f_{\x} : 2^d \rightarrow \mathbb{R}$: A set value function
     \item $\ell \in [d]$: The maximum interaction order
     \item $\ex$: The importance function
     \item $\ex(\f, \ell) = (\ex_{S}(\f, \ell))_{S \in \mathcal{S}_\ell} \in \R^{d_\ell}$
@@ -213,7 +213,7 @@
 $\f(S \! \cup  i) = \f(S \! \cup  j) \!$ for any $S \subseteq [d] \backslash \{i,j\}$, the interaction index satisfies: $\ex_{T \cup i}(\f,\ell) = \ex_{ T \cup j}(\f,\ell)$ for any $T \subseteq [d] \backslash \{i,j\}$ with $|T| < \ell$.
     \end{myaxiombox}
     \begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
-        \item i, j : exchangeability and same importance
+        \item i, j : Exchangeability and same importance
     \end{itemize}
 \end{frame}
 %===
@@ -270,7 +270,7 @@ $\f(S \! \cup  i) = \f(S \! \cup  j) \!$ for any $S \subseteq [d] \backslash \{i
     \vspace{1.5em}
     \begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
         \item Calculating weights considering the order.
-        \item Discrete derivatve means a pure interaction effect. (Def.1)
+        \item Discrete derivative means a pure interaction effect. (Def.1)
     \end{itemize}
 \end{frame}
 %===
@@ -318,6 +318,7 @@ $\f(S \! \cup  i) = \f(S \! \cup  j) \!$ for any $S \subseteq [d] \backslash \{i
     \vspace{1.5em}
     \begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
         \item Selecting the maximum order l is important.
+        \item Tendency to excessively focus on higher-order interactions
     \end{itemize}
 \end{frame}
 
@@ -326,7 +327,7 @@ $\f(S \! \cup  i) = \f(S \! \cup  j) \!$ for any $S \subseteq [d] \backslash \{i
 \begin{frame}{Faith-Interaction Indices}
     \textbf{Singleton Attributions to Interaction Indices} : \\
     Let value function with $S$, \[\f(S) \approx \sum_{T \subseteq S, |T| \leq \ell} \Expl_T(\f,\ell),\; \forall S \subseteq [d].\]
-    And then, we consider the following weghted regression problem,
+    And then, we consider the following weighted regression problem,
     \begin{equation*}
     \label{eqn:weighted_regression}
     \ex(\f, \ell) \ = \argmin_{\Expl \subseteq \mathbb{R}^{d_\ell} } 
@@ -335,7 +336,7 @@ $\f(S \! \cup  i) = \f(S \! \cup  j) \!$ for any $S \subseteq [d] \backslash \{i
     \end{equation*}
     \vspace{1.5em}
     \begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
-        \item Under variables d, solve $2^d$ linear equalites.
+        \item Under variables d, solve $2^d$ linear equalites. (\textbf{overdetermined})
         \item Therefore, consider approximation. 
     \end{itemize}
     % weighting fuction이 무엇인지 설명 넣어주고 제약이 들어간 최적화 문제로 다시 설명할 것. (다음 페이지)
@@ -367,7 +368,7 @@ $\f(S \! \cup  i) = \f(S \! \cup  j) \!$ for any $S \subseteq [d] \backslash \{i
     % def 10 : proper <=> mu function < inf
     \vspace{1.5em}
     \begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
-        \item A Unique minimzer = A Unique solution.
+        \item A unique minimzer = A unique solution.
     \end{itemize}
 \end{frame}
 %===
@@ -388,7 +389,7 @@ $\f(S \! \cup  i) = \f(S \! \cup  j) \!$ for any $S \subseteq [d] \backslash \{i
     \sum  \mu(S) \left( \f(S) - \sum \Expl_T(\f,\ell) \right)^2
     = \sum  \mu'(S) \left( \f(S) - \sum\Expl_T(\f,\ell) \right)^2.
     $$
-    Therefore, 2nd term is also a strictly convex function by Propostion 25.
+    Therefore, 2nd term is also a strictly convex function by Proposition 25.
     
     Since $\exists$ at least a solution $\ex(\f,\ell)$ for the set of linear equations \\
     $$\f(S) - \sum\Expl_T(\f,\ell) =0$$
@@ -451,6 +452,7 @@ $\f(S \! \cup  i) = \f(S \! \cup  j) \!$ for any $S \subseteq [d] \backslash \{i
     \end{myaxiombox}
     \begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
         \item $0 < p_i < 1$ is the probability of the feature $i$ to be present.
+        \item The proof utilizes the independence of features to remove an irrelevant feature, simplifying the objective function
     \end{itemize}
     % 증명의 방식을 대충 요약하자면, feature들이 독립이라는 성질을 활용해 영향을 주지 않는 feature 하나를 제거함으로써 목적식을 축소하고 두 목적식의 해를 비교해서 하나 줄어들었던 단일 영향력을 0이라는 것을 보여주는걸로 증명함.
 \end{frame}
@@ -473,6 +475,9 @@ $\f(S \! \cup  i) = \f(S \! \cup  j) \!$ for any $S \subseteq [d] \backslash \{i
             & \text{ if } \   1 \leq i \leq d,\\
         \end{cases}
     \end{align*}
+    \begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
+        \item W ft have only two degrees of freedom.
+    \end{itemize}
 \end{frame}
 %===
 \begin{frame}{Proposition 18}
@@ -482,6 +487,7 @@ $\f(S \! \cup  i) = \f(S \! \cup  j) \!$ for any $S \subseteq [d] \backslash \{i
     \end{myaxiombox}
     \begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
         \item Sufficient condition : Since constraint, the condition is trivial.
+
     \end{itemize}
 \end{frame}
 %===
