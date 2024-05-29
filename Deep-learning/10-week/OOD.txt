@@ -1,0 +1,21 @@
+논문 제목 : "Out-of-distribution Detection with Boundary Aware Learning"
+
+문제점 : real world에서는 train 데이터나 test 데이터의 분포의 차이가 있을 수 있음 (out-of-distribution)
+  - 따라서 OOD 데이터를 효과적으로 인지하고 학습하는 것이 중요하다.
+
+해결책 : Boundary Aware Learning
+  OOD feature들을 점근적으로 샘플링해서 discriminant가 이러한 feature와 ID feature를 구분하는 것을 학습하는 것이 핵심 아이디어
+ - 총 3가지 단계로 구성 (REM, RSM, RDM)
+
+
+** BAL 프레임워크
+* REM
+  - OOD feature를 생성하고 conditional discriminator의 학습을 도움
+
+* RSM
+  - OOD feature를 생성해 discriminator의 구분 역할을 점근적으로 향상
+
+* RDM
+  - discriminator가 ID feautre의 경계를 aware하도록 학습
+
+느낀점 : 최신 논문들을 읽으면 항상 느껴지는 것이 기존에 좋은 방법들을 잘 조합해서 아이디어를 제공한다는 것을 느꼈습니다.
