@@ -1,0 +1,17 @@
+논문 제목 : "RareGAN : Generating Samples for Rare Classes"
+
+문제점 : label이 없는 데이터에서 rare class를 학습하기 어려움
+  - 기존 연구들은 완벽하게 labeling이 되있거나 rare class의 충실도를 희생하는 방식으로 접근
+  → 한정적인 자원 내에서 큰비용으로 인해 유용한 샘플을 선택하는 것이 핵심
+  - 충실도(정확도)와 다양성의 trade-off
+
+해결책 : conditional GAN을 확장, active learning 적용, rare class를 강조하기 위해 weighted loss function 활용
+  - active learning을 통해 유용한 샘플의 라벨링을 우선적으로 시행 (least confidence sampling)
+  - rare class 데이터는 밀도가 낮기 때문에 높은 가중치 부여
+
+Loss function의 경우
+ - Generator Loss : 생성자가 생성한 샘플이 실제 데이터와 얼마나 유사한지 측정
+ - Discriminator Loss : 실제 데이터와 생성된 데이터를 얼마나 잘 구분하는지 측정
+
+느낀점 : 예전에 기계학습 수업시간에 잠깐 들었던 GAN의 손실함수 형태가 minimax여서 굉장히 놀랐는데, 이 논문에서는 한번 더 나아가 min min max 형태여서 더욱 재밌었음.
+최적화 계산이 쉽지 않을 것 같다는 생각이 들었습니다.
