@@ -13,6 +13,12 @@
 | 2024-04-18 | Class-Aware Contrastive Semi-Superivsed Learning | [CVPR 2022](https://openaccess.thecvf.com/content/CVPR2022/html/Yang_Class-Aware_Contrastive_Semi-Supervised_Learning_CVPR_2022_paper.html) |
 | 2024-05-02 | ReSSL: Relational Self-Supervised Learning with Weak Augmentation | [NeurIPS 21](https://proceedings.neurips.cc/paper_files/paper/2021/hash/14c4f36143b4b09cbc320d7c95a50ee7-Abstract.html) |
 | 2024-05-02 | Rethinking the Augmentation Module in Contrastive Learning | [CVPR 21](https://openaccess.thecvf.com/content/CVPR2022/html/Zhang_Rethinking_the_Augmentation_Module_in_Contrastive_Learning_Learning_Hierarchical_Augmentation_CVPR_2022_paper.html) |
-| 2024-05-16 | VLMixer: Unpaired Vision-Language Pre-training via Cross-Modal CutMix | [ICML 22](https://arxiv.org/abs/2206.08919) |
+| 2024-05-23 | VLMixer: Unpaired Vision-Language Pre-training via Cross-Modal CutMix | [ICML 22](https://arxiv.org/abs/2206.08919) |
+| 2024-05-30 | RareGAN: Generating Samples for Rare Classes | AAAI 22 |
+| 2024-05-30 | Out-of-distribution Detection with Boundary Aware Learning | ECCV 22 |
+| 2024-05-30 | Effective Data Augmentation for Sentence Classification using One VAE per Class | ICCL 22 |
+| 2024-05-30 | Generative Oversampling for Imbalanced Data via Majority-Guided VAE | AISTATS 23 |
+
 
 * 8-week : mid term issue
+* 10-week : presentation session - 05-23 to 05-30
