@@ -1,0 +1,199 @@
+\documentclass[10pt, aspectratio=169]{beamer}
+
+\usetheme[progressbar=frametitle]{metropolis}
+\usecolortheme{aggie}
+
+\usepackage{appendixnumberbeamer}
+\usepackage{tcolorbox} % 내 설정
+\tcbuselibrary{breakable}
+\usepackage{booktabs}
+\usepackage[scale=2]{ccicons}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{enumitem}
+\usepackage{ltablex}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+
+\usepgfplotslibrary{dateplot}
+
+\usepackage{xspace}
+\newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
+\newcommand{\printfnsymbol}[1]{%
+  \textsuperscript{\@fnsymbol{#1}}%
+}
+\makeatother
+\newenvironment{callig}{\fontfamily{qcr}\selectfont}{}
+\newcommand{\textcallig}[1]{{\callig#1}}
+\newcommand{\f}{v}
+\newcommand{\g}{g}
+\newcommand{\hY}{\hat{y}}
+\newcommand{\x}{x}
+\newcommand{\z}{z}
+\newcommand{\I}{\delta}
+%\newcommand{\R}{\mathbb{R}}
+\newcommand{\expd}{\text{\textcallig{p}}}
+\newcommand{\ex}{\Expl}
+\newcommand{\prodd}{\Upsilon}
+\def\Expl{\mathcal{E}}
+\newcommand{\e}{\mathbf{e}}
+\newcommand{\m}{m}
+\newcommand{\M}{M}
+\newcommand{\bfalpha}{\mathbf{\alpha}}
+\newcommand{\veck}{\mathbf{k}}
+\newcommand*{\medcup}{\mathbin{\scalebox{1.5}{\ensuremath{\cup}}}}
+\newcommand{\mubar}[1]{\bar{\mu}_{#1}}
+\newcommand{\setlessell}{\mathcal{S}_\ell }
+\newcommand{\bfb}{\mathbf{b} }
+\DeclareMathOperator{\spann}{span}
+\DeclareMathOperator{\calA}{\mathcal{A}}
+\newcommand*{\defeq}{\stackrel{\text{def}}{=}}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+
+
+% start == Title Page %%%
+\title{Multiple Testing}
+\subtitle{In Nonparametric Hidden Markov Models:
+ An Empirical Bayes Approach}
+% \date{\today}
+\date{June 4, 2024}
+\author{mose Park}
+\institute{Department of Statistical Data Science \\
+    University of Seoul}
+\vfuzz=20pt
+\hfuzz=10pt
+% end == Title Page %%%
+
+%%% box
+% 사용자 정의 tcolorbox 환경을 만듭니다.
+\newtcolorbox{myaxiombox}[2][]{%
+    title=#2,
+    colback=white,
+    colframe=red!50!black,
+    coltitle=white,
+    fonttitle=\bfseries,
+    rounded corners,
+    boxsep=5pt,
+    boxrule=1pt,
+    #1 % 추가 옵션을 위한 공간
+}
+
+\newtcolorbox{mydefbox}[2][]{%
+    title=#2,
+    colback=white,
+    colframe=red!50!gray, % 여기에 오타 수정
+    coltitle=white,
+    fonttitle=\bfseries,
+    rounded corners,
+    boxsep=5pt,
+    boxrule=1pt,
+    #1 % 추가 옵션을 위한 공간
+}
+
+\newtcolorbox{mytheorembox}[2][]{%
+    title=#2,
+    colback=white,
+    colframe=red!50!gray, % 여기에 오타 수정
+    coltitle=white,
+    fonttitle=\bfseries,
+    rounded corners,
+    boxsep=5pt,
+    boxrule=1pt,
+    #1 % 추가 옵션을 위한 공간
+}
+
+%%%
+\begin{document}
+
+\maketitle
+
+%===
+\begin{frame}{Table of contents}
+  \setbeamertemplate{section in toc}[sections numbered]
+  \tableofcontents%[hideallsubsections]
+\end{frame}
+%===
+\section[Intro]{Introduction}
+%===
+%===
+\begin{frame}{Aim of the paper}
+    \begin{figure}[h]
+    \centering
+    \includegraphics[width=1.0\textwidth]{fig-2/aim.png}
+    \end{figure}
+
+    \begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
+        \vspace{1.5em}
+        \itemsep1.2em
+        \item $ "\theta = 0" $ means \textbf{typical disease} levels. → ex) \textit{A common cold}
+        \item $ "\theta = 1" $ means \textbf{atypical outbreak}. → ex) \textit{MERS, Covid-19}
+    \end{itemize}
+\end{frame}
+% 데이터 X, 마코프 체인으로부터 추출된 관찰되지 않은 범주형 변수 theta (0,1)
+% 독립성 기반 가정 고려 X
+% hidden state theta로부터 생성된 obs data X 
+%===
+\begin{frame}
+    
+\end{frame}
+%===
+%===
+\begin{frame}
+    
+\end{frame}
+%===
+%===
+\begin{frame}
+    
+\end{frame}
+%===
+%===
+\begin{frame}
+    
+\end{frame}
+%===
+%===
+\begin{frame}
+    
+\end{frame}
+%===
+%===
+\begin{frame}
+    
+\end{frame}
+%===
+%===
+\begin{frame}
+    
+\end{frame}
+%===
+%===
+\begin{frame}
+    
+\end{frame}
+%===
+%===
+\begin{frame}
+    
+\end{frame}
+%===
+%===
+\begin{frame}
+    
+\end{frame}
+%===
+
+
+
+
+
+%===
+\end{document}
