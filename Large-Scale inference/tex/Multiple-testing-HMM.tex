@@ -241,6 +241,7 @@ TDR is defined as $\mathbb{E}(\text{proportion of signals})$ detected by a $\var
     \item Because we don't know parameter, we use empirical bayesian method.
 \end{itemize}
 \end{frame}
+% 프로시저가 1이라는 것은 무슨 의미일까?
 %===
 
 \section[Empirical approach]{Empirical Bayesian Procedure}
@@ -248,34 +249,160 @@ TDR is defined as $\mathbb{E}(\text{proportion of signals})$ detected by a $\var
 %===
 \begin{frame}{Thresholding procedure}
     
-
+    \begin{itemize}[label=\scalebox{0.5}{$\bullet$}]
+        \item Based on thresholding by posterior probabilities as ‘$\ell$-values’:
+        \begin{equation}
+            \ell_i(X) \equiv \ell_{i,H}(X) = \Pi_H(\theta_i = 0 | X). \tag{7}
+        \end{equation}
+        
+        \item In the parameter \( H \) is known, an $\ell$-value thresholding procedure is the optimal procedure:
+        \begin{equation}
+            \varphi_{\lambda,H}(X) = \left(1\{\ell_{i,H}(X) < \lambda\}\right)_{i \leq N}. \tag{8}
+        \end{equation}
+        
+        \item When the parameter \( H \) is unobserved, an estimator \( \hat{H} \) is used:
+        \begin{equation}
+             \hat{\lambda} = \hat{\lambda}(\hat{H},t) := \sup\{\lambda : \text{postFDR}_{\hat{H}}(\varphi_{\lambda,\hat{H}}) \leq t\}. \tag{9}
+        \end{equation}
+    \end{itemize}
     
 \end{frame}
 %===
 %===
 \begin{frame}
-    
+    \begin{itemize}[label=\scalebox{0.5}{$\bullet$}]
+        \item Alternative characterisation of the threshold \( \hat{\lambda} \).
+        \item By def (5) and (7), postFDR following: 
+        \begin{equation}
+            \text{postFDR}_H(\varphi) = \frac{\sum_{i=1}^{N} \ell_{i,H} \varphi_i}{1 \lor (\sum_{i=1}^{N} \varphi_i)}. \tag{10}
+        \end{equation}
+        \item The threshold \( \hat{\lambda} \) can be equivalently expressed as \( \hat{\lambda} = \hat{\ell}_{(\hat{K}+1)} \) and \( \hat{K} \) is defined by:
+        \begin{equation}
+            \frac{1}{\hat{K}} \sum_{i=1}^{\hat{K}} \hat{\ell}_{(i)} \leq t < \frac{1}{\hat{K}+1} \sum_{i=1}^{\hat{K}+1} \hat{\ell}_{(i)}. \tag{11}
+        \end{equation}
+        \item \( \hat{K} \) is well-defined and unique by monotonicity of the average of non-decreasing numbers.
+        \item Therefore, following Dichotomy:
+        \begin{equation}
+            \text{postFDR}_{\hat{H}}(\varphi_{\lambda, \hat{H}}) \leq t \iff \lambda \leq \hat{\lambda}. \tag{12}
+        \end{equation}
+    \end{itemize}
+\end{frame}
+% 왜 람다 햇을 채택하는지? 왜 대체하는지?
+% 여기 파트 디테일이 너무 어렵다.
+%===
+%===
+\begin{frame}{Rejection set}
+    \begin{mydefbox}{Definition 1.}
+        Define \( \hat{\varphi} = \hat{\varphi}(t) \) to be a procedure rejecting exactly \( \hat{K} \) of the hypotheses with the smallest \( \hat{\ell}_i \) values, choosing arbitrarily in case of ties, where \( \hat{K} \) is defined by (11). We write \( \hat{S}_0 \) for the rejection set
+        \[
+        \hat{S}_0 = \{i \leq N : \hat{\varphi}_i = 1\},
+        \]
+        and we note that by construction we have \( |\hat{S}_0| = \hat{K} \) and
+        \[
+        \{i : \hat{\ell}_i(X) < \hat{\lambda} \} \subseteq \hat{S}_0 \subseteq \{i : \hat{\ell}_i(X) \leq \hat{\lambda} \}.
+        \]
+    \end{mydefbox}
+\end{frame}
+%===
+%===
+\begin{frame}{Assumption}
+    \begin{assumpbox}{Assumption A}
+        There exists \( x^* \in \mathbb{R} \cup \{\pm\infty\} \) such that either
+        \[
+        \frac{f_1(x)}{f_0(x)} \to \infty, \quad \text{as } x \uparrow x^*,
+        \]
+        or
+        \[
+        \frac{f_1(x)}{f_0(x)} \to \infty, \quad \text{as } x \downarrow x^*,
+        \]
+        where we take the conventions that \( \frac{1}{0} = \infty \), \( \frac{0}{0} = 0 \).
+    \end{assumpbox}
 \end{frame}
 %===
 %===
 \begin{frame}
-    
+    \begin{assumpbox}{Assumption B}
+        There exists a constant \( \nu > 0 \) such that
+        \begin{equation*}
+            \max_{j=0,1} \mathbb{E}_{X \sim f_j} (|X|^\nu) < \infty.
+        \end{equation*}
+    \end{assumpbox}
+     \begin{assumpbox}{Assumption C}
+        \begin{itemize}
+            \item The matrix \( Q \) has full rank (i.e., its two rows are distinct), and 
+            \[
+            \delta := \min_{i,j} Q_{i,j} > 0.
+            \]
+            \item The Markov chain is stationary: the initial distribution \( \pi = (\pi_0, \pi_1) \) is the invariant distribution for \( Q \).
+        \end{itemize}
+    \end{assumpbox}  
+\end{frame}
+%===
+\begin{frame}{Asymptotic properties}
+   \begin{mytheorembox}{Theorem 2.}
+        Grant Assumptions A to C. Suppose that for some \( u > 1 + \nu^{-1} \) and some sequence
+        \( \varepsilon_N \) such that \( \varepsilon_N (\log N)^u \to 0 \), the estimators \( \hat{Q}, \hat{\pi} \) and \( \hat{f}_j, j = 0,1 \) satisfy
+        \[
+        \Pi_H \left( \max \left\{ \|\hat{Q} - Q\|_F, \|\hat{\pi} - \pi\|, \|\hat{f}_0 - f_0\|_\infty, \|\hat{f}_1 - f_1\|_\infty \right\} > \varepsilon_N \right) \to 0, \quad \text{as } N \to \infty.
+        \]
+        Then for \( \hat{\varphi} \) the multiple testing procedure of Definition 1 we have
+        \[
+        \text{FDR}_H(\hat{\varphi}) \to \min(t, \pi_0).
+        \]
+   \end{mytheorembox}
+   \vspace{2em}
+    \begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
+        \item Ensuring \textbf{asymptotic properties} of the estimators.
+    \end{itemize}
 \end{frame}
 %===
 %===
 \begin{frame}
-    
+   \begin{mytheorembox}{Theorem 3.}
+        In the setting of Theorem 2, additionally grant that the distribution function of the
+        random variable \( \left( \frac{f_1}{f_0} \right) (X_1) \) (i.e. the function \( t \mapsto \Pi_H \left( \left( \frac{f_1}{f_0} \right) (X_1) \leq t \right) \) is continuous and strictly
+        increasing. Then the procedure \( \hat{\varphi} \) of Theorem 2 satisfies the following as \( N \to \infty \):
+        \begin{equation*}
+            \begin{split}
+            \text{mTDR}_H(\hat{\varphi}) = &\sup \{ \text{mTDR}_H(\psi) : \text{mFDR}_H(\psi) \leq \text{mFDR}_H(\hat{\varphi}) \} + o(1) \\
+            = &\sup \{ \text{mTDR}_H(\psi) : \text{mFDR}_H(\psi) \leq t \} + o(1).
+            \end{split}
+        \end{equation*}
+        The suprema are over all multiple testing procedures \( \psi \) satisfying the bound on their mFDR, including
+        oracle procedures allowed knowledge of the parameters \( H \).
+    \end{mytheorembox}
+\end{frame}
+%===
+\section[Estimation of Emission Densities]{Estimation of emission densities}
+%===
+\begin{frame}
+   
 \end{frame}
 %===
 %===
 \begin{frame}
-    
+   
+\end{frame}
+%===
+%===
+\begin{frame}
+   
+\end{frame}
+%===
+%===
+\begin{frame}
+   
+\end{frame}
+%===
+%===
+\begin{frame}
+   
+\end{frame}
+%===
+%===
+\begin{frame}
+   
 \end{frame}
 %===
 
-
-
-
-
-%===
 \end{document}
