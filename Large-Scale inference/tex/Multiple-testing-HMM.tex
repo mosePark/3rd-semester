@@ -337,6 +337,7 @@ TDR is defined as $\mathbb{E}(\text{proportion of signals})$ detected by a $\var
         \end{itemize}
     \end{assumpbox}  
 \end{frame}
+% full rank가 중요한 이유? : 정확한 추정을 하기 위해서, 선형독립이어야 해가 유일하게 존재하는 것을 보장할 수 있기 때문
 %===
 \begin{frame}{Asymptotic properties}
    \begin{mytheorembox}{Theorem 2.}
@@ -375,34 +376,368 @@ TDR is defined as $\mathbb{E}(\text{proportion of signals})$ detected by a $\var
 %===
 \section[Estimation of Emission Densities]{Estimation of emission densities}
 %===
-\begin{frame}
-   
+\begin{frame}{Convergence rate}
+   \begin{assumpbox}{Assumption C'}
+        The matrix \( Q \) is full rank, the \( J \)-state Markov chain \( (\theta_n)_{n \in \mathbb{N}} \) is irreducible and aperiodic, and \( \theta_1 \) follows the invariant distribution. [This is weaker than Assumption C in general, but equivalent in the two-state setting.]
+    \end{assumpbox}
+
+    \begin{assumpbox}{Assumption D}
+        The density functions \( f_1, \ldots, f_J \) are linearly independent. [In the two-state setting it suffices to assume \( f_0 \neq f_1 \), which is implied by Assumption A.]
+    \end{assumpbox}
 \end{frame}
 %===
 %===
 \begin{frame}
-   
+   \begin{mytheorembox}{Theorem 4}
+        Assume that the dominating measure \( \mu \) is the counting measure on \( \mathbb{Z} \). Let \( M_N \) be a sequence tending to infinity, arbitrarily slowly. Under Assumptions C' and D, there exist estimators \( \hat{f}_1, \ldots, \hat{f}_J \) and a permutation \( \tau \) such that
+        \[
+        \Pi_H \left( \| \hat{f}_j - f_{\tau(j)} \|_\infty \geq M_N N^{-1/2} \right) \to 0.
+        \]
+    \end{mytheorembox}
+\end{frame}
+% tau가 왜 필요한지? 설명이 좀 필요할듯
+%===
+%===
+\begin{frame}
+   \begin{assumpbox}{Assumption E}
+        \( f_1, \ldots, f_J \) belong to \( C^s(\mathbb{R}) \) for some \( s > 0 \). Here, \( C^s(\mathbb{R}) \) denotes the space of locally Hölder-continuous functions equipped with the norm
+        \[
+        \| f \|_{C^s} = \| f \|_\infty + \sup_{0 < |x - y| \leq 1} \frac{|f(x) - f(y)|}{|x - y|^s}, \quad \text{for } 0 < s < 1,
+        \]
+        and for \( s \geq 1 \),
+        \[
+        \| f \|_{C^s} = \| f^{(\lfloor s \rfloor)} \|_{C^{s - \lfloor s \rfloor}} + \sum_{0 \leq i < \lfloor s \rfloor} \| f^{(i)} \|_\infty.
+        \]
+    \end{assumpbox}
+\end{frame}
+%===
+%===
+   \begin{frame}
+    \begin{mytheorembox}{Theorem 5}
+        Grant Assumptions B, C', D, and E. Suppose \( L_0 \to \infty \) as \( N \to \infty \), and \( L_0^{\max(5, (J+3)/2)} r_N \to 0 \), where \( r_N = \left( \frac{N}{\log N} \right)^{-\frac{s}{1 + 2s}} \). Then there exist estimators \( \hat{f}_j, 1 \leq j \leq J \) (continuous so that the supremum below is measurable) and a permutation \( \tau \) such that, for some \( C > 0 \),
+        \[
+        \Pi_H \left( \| \hat{f}_j - f_{\tau(j)} \|_\infty \geq C L_0^5 r_N \right) \to 0.
+        \]
+        Convergence in expectation also holds: for some \( C' > 0 \),
+        \[
+        \mathbb{E}_H \| \hat{f}_j - f_{\tau(j)} \|_\infty \leq C' L_0^5 r_N.
+        \]
+    \end{mytheorembox}
+\end{frame}
+% 이어서 명제 6에서 HMM 세팅에서도 목표 수렴속도를 달성한다는 것을 시사 
+% 정리5는 스펙트럼 방법, 정리6은 KDE로 알고리즘
+%===
+\section{Proofs}
+%===
+\begin{frame}{FDR Control, TDR Optimality}
+
+    \begin{mytheorembox}{Lemma 9.}
+        In the setting of Theorem 2, define \(\epsilon'_N = \epsilon_N (\log N)^u\), and recall that by definition \(u > 1 + \nu^{-1}\) and by assumption \(\epsilon'_N \to 0\), where \(\nu\) is the parameter of Assumption B. Then
+        \[
+        \max_{i \leq N} \Pi_H(|\hat{\ell}_i(X) - \ell_i(X)| > \epsilon'_N) \to 0, \quad \text{as} \ N \to \infty. \tag{20}
+        \] 
+        Consequently, there exists \(\delta_N \to 0\) such that
+        \[
+        \Pi_H\left(\#\{i \leq N : |\hat{\ell}_i(X) - \ell_i(X)| > \epsilon'_N\} > N \delta_N \right) \to 0.
+        \]
+    \end{mytheorembox}
+    \begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
+        \item Lemma 9 shows that \(\hat{\ell}_i(X)\) converges to \(\ell_i(X)\) at a rate slightly slower than \(\epsilon_N\).
+        \item This lemma is essential for establishing bounds on the FDR and TDR.
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Proof}
+   \begin{itemize}[label=\scalebox{0.5}{$\bullet$}]
+        
+        \item \textit{Initial Definitions and Assumptions}:
+        \begin{itemize}[label=\scalebox{0.5}{$\bullet$}]
+            \setlength{\itemsep}{\baselineskip}
+            \item Define \(\epsilon'_N = \epsilon_N (\log N)^u\), with \(u > 1 + \nu^{-1}\) and assume \(\epsilon'_N \to 0\).
+            \item \(\nu\) is the parameter of Assumption B.
+            \item The goal is to prove that \(\max_{i \leq N} \Pi_H(|\hat{\ell}_i(X) - \ell_i(X)| > \epsilon'_N) \to 0\).
+        \end{itemize}
+
+        \item \textit{Setting Initial Bound for Each \(i\)}:
+        \begin{itemize}[label=\scalebox{0.5}{$\bullet$}]
+            \setlength{\itemsep}{\baselineskip}
+            \item Show that for all \(i\), \(\Pi_H(|\hat{\ell}_i(X) - \ell_i(X)| > M \epsilon'_N) \to 0\), where \(M\) is a constant depending only on certain bounds for the parameter \(H = (Q, \pi, f_0, f_1)\).
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+%===
+\begin{frame}
+\begin{itemize}[label=\scalebox{0.5}{$\bullet$}]
+    \setlength{\itemsep}{\baselineskip}
+    \item \textit{Defining Probabilistic Event Sequence \((E_N)_N\)}:
+        \begin{itemize}[label=\scalebox{0.5}{$\bullet$}]
+            \setlength{\itemsep}{\baselineskip}
+            \item Define a sequence of events \((E_N)_N\) with probability tending to 1 where the estimators \(\hat{Q}, \hat{\pi}, \hat{f}_j\) are close to the true values \(Q, \pi, f_j\) within \(\epsilon_N\).
+            \item Introduce additional parameters \(\delta\) and \(\rho\) for further calculations.
+        \end{itemize}
+
+        \item \textit{Establishing the Main Inequality}:
+        \begin{itemize}[label=\scalebox{0.5}{$\bullet$}]
+            \setlength{\itemsep}{\baselineskip}
+            \item Use Proposition 2.2 from De Castro et al. (2017) to establish an inequality for \(|\hat{\ell}_i(X) - \ell_i(X)|\) involving \(\epsilon_N\) and \(\epsilon'_N\).
+            \item Derive the inequality by expressing \(\ell_i(X)\) and \(\hat{\ell}_i(X)\) in terms of the defined parameters.
+        \end{itemize}
+
+        
+    \end{itemize}
+\end{frame}
+%===
+\begin{frame}
+\begin{itemize}[label=\scalebox{0.5}{$\bullet$}]
+    \item \textit{Combining Probabilistic Bounds}:
+        \begin{itemize}[label=\scalebox{0.5}{$\bullet$}]
+            \setlength{\itemsep}{\baselineskip}
+            \item Split terms into intervals \(S_{\kappa,i}\) and \(S^c_{\kappa,i}\) to further refine the bounds.
+            \item Show that the probability \(\Pi_H\) of exceeding certain bounds tends to zero by using union bounds.
+        \end{itemize}
+    \setlength{\itemsep}{\baselineskip}
+    \item \textit{Applying Markov's Inequality}:
+        \begin{itemize}[label=\scalebox{0.5}{$\bullet$}]
+            \setlength{\itemsep}{\baselineskip}
+            \item Apply Markov's inequality to show that the derived bounds hold for all \(i\) and extend to the entire sequence \(N\).
+            \item Conclude that \(\max_{i} \Pi_H(|\hat{\ell}_i(X) - \ell_i(X)| > \epsilon'_N) \to 0\).
+        \end{itemize} \qed
+\end{itemize}
+\end{frame}
+
+%===
+\begin{frame}{Pf of Thm 2}
+
+    \begin{itemize}[label=\scalebox{0.5}{$\bullet$}]
+        \setlength{\itemsep}{\baselineskip}
+        \item \textit{Initial Definitions and Notation}:
+            \begin{itemize}[label=\scalebox{0.5}{$\bullet$}]
+                \setlength{\itemsep}{\baselineskip}
+                \item Define \(\hat{t} = \text{postFDR}_{\hat{H}} \hat{\varphi}\).
+                \item Let \(\hat{S}_0\) be the rejection set of \(\varphi\).
+                \item Define \(\epsilon'_N\) as a sequence of positive numbers and \(F_N\) as a sequence of events.
+            \end{itemize}
+
+        \item \textit{Analyzing the Difference Between FDR and Expectation}:
+            \begin{itemize}[label=\scalebox{0.5}{$\bullet$}]
+                \setlength{\itemsep}{\baselineskip}
+                \item Analyze \(|\text{FDR}_{H}(\hat{\varphi}) - E_{H} \hat{t}|\).
+                \item Use the difference in expectations and bounds based on \(\hat{\ell}_i(X)\) and \(\ell_i(X)\).
+            \end{itemize}
+    \end{itemize}
+
 \end{frame}
 %===
 %===
 \begin{frame}
-   
-\end{frame}
-%===
-%===
-\begin{frame}
-   
-\end{frame}
-%===
-%===
-\begin{frame}
-   
-\end{frame}
-%===
-%===
-\begin{frame}
-   
+\begin{itemize}[label=\scalebox{0.5}{$\bullet$}]
+    \item \textit{Setting the Bound}:
+            \begin{itemize}[label=\scalebox{0.5}{$\bullet$}]
+                \setlength{\itemsep}{\baselineskip}
+                \item Use \(| \ell_i(X) - \hat{\ell}_i(X) | \leq 1\) to set the bound.
+                \item Apply Lemma 13: \(E_{H}[\hat{t}] \to \min(t, \pi_0)\).
+            \end{itemize}
+
+        \item \textit{Analyzing the Convergence of the Bound}:
+            \begin{itemize}[label=\scalebox{0.5}{$\bullet$}]
+                \setlength{\itemsep}{\baselineskip}
+                \item Show that the right-hand side tends to zero for suitable \(\epsilon'_N\) and \(F_N\).
+                \item Use Lemma 14: \( \Pi_{H}(|\hat{S}_0| > aN) \to 1 \) for some \(a > 0\).
+                \item Combine with Lemma 9: choose \(\epsilon'_N \to 0\), \(\delta_N \to 0\), \(a > 0\).
+            \end{itemize}
+\end{itemize}
 \end{frame}
 %===
 
+
+%===
+\begin{frame}
+    \begin{itemize}[label=\scalebox{0.5}{$\bullet$}]
+                \item \textit{Defining the Event \(F_N\)}:
+            \begin{itemize}[label=\scalebox{0.5}{$\bullet$}]
+                \setlength{\itemsep}{\baselineskip}
+                \item Define \(F_N\) as \(\{ \#\{i \leq N : |\hat{\ell}_i(X) - \ell_i(X)| > \epsilon'_N\} \leq N \delta_N \} \cap \{ |\hat{S}_0| > aN \}\).
+                \item Show that \( \Pi_{H}(F_N^c) \to 0 \).
+            \end{itemize}
+
+        \item \textit{Deriving the Result}:
+            \begin{itemize}[label=\scalebox{0.5}{$\bullet$}]
+                \setlength{\itemsep}{\baselineskip}
+                \item Show that 
+                \[
+                E_{H} \left[ \sum_{i=1}^{N} 1_{F_N} 1_{\{|\ell_i(X) - \hat{\ell}_i(X)| > \epsilon'_N\}} \bigg/ (1 \vee |\hat{S}_0|) \right] \leq \frac{N \delta_N}{aN} \to 0.
+                \]
+                \item Conclude that the final result holds, ensuring the convergence of the estimator.
+            \end{itemize} \qed
+    \end{itemize}
+\end{frame}
+%===
+
+\begin{frame}{Pf of Thm 3}
+    \begin{itemize}[label=\scalebox{0.5}{$\bullet$}]
+        \setlength{\itemsep}{\baselineskip}
+        \item \textit{Initial Definitions and Notation}:
+            \begin{itemize}[label=\scalebox{0.5}{$\bullet$}]
+                \setlength{\itemsep}{\baselineskip}
+                \item Define \(\lambda^*\) as in Lemma 10.
+                \item If \(\lambda^* = 1\), show that \(\hat{\varphi}\) rejects all but \(o_p(N)\) of the hypotheses.
+                \item Assume \(\lambda^* < 1\), or equivalently \(t < \pi_0\).
+            \end{itemize}
+
+        \item \textit{Comparison with 'Oracle' Procedure}:
+            \begin{itemize}[label=\scalebox{0.5}{$\bullet$}]
+                \setlength{\itemsep}{\baselineskip}
+                \item Compare \(\hat{\varphi}\) with the 'oracle' procedure \(\varphi_{\lambda^*, H}\).
+                \item For \(\epsilon_N > 0\), decompose:
+                \[
+                1\{\ell_i < \lambda^*\} \leq 1\{\lambda^* - \epsilon_N \leq \ell_i < \lambda^*\} + 1\{\hat{\ell}_i < \hat{\lambda}\} + 1\{\hat{\lambda} < \lambda^* - \epsilon_N/2\} + 1\{\hat{\ell}_i - \ell_i > \epsilon_N/2\}.
+                \]
+            \end{itemize}
+
+        
+    \end{itemize}
+\end{frame}
+
+%===
+\begin{frame}
+    \begin{itemize}[label=\scalebox{0.5}{$\bullet$}]
+        \item \textit{Convergence of Estimators}:
+            \begin{itemize}[label=\scalebox{0.5}{$\bullet$}]
+                \setlength{\itemsep}{\baselineskip}
+                \item Use Lemma 10 to show \(\hat{\lambda}\) converges to \(\lambda^*\) in probability.
+                \item Use Lemma 9 to show \(\#\{i : |\hat{\ell}_i - \ell_i| > \epsilon_N/2\}/N \to 0\).
+            \end{itemize}
+
+        \item \textit{Analyzing Decomposed Terms}:
+            \begin{itemize}[label=\scalebox{0.5}{$\bullet$}]
+                \setlength{\itemsep}{\baselineskip}
+                \item Use Lemma 19: \(\xi_N \to 0\) exists such that \(\#\{i : |\ell_i - \ell^\infty_i| > \xi_N\}/N \to 0\).
+                \item Use Lemma 17: the distribution function of \(\ell^\infty_i\) is continuous:
+                \[
+                E_H\left[\#\{i : \lambda^* - \epsilon_N \leq \ell_i < \lambda^*\}/N\right] \leq E_H\left[\#\{i : |\ell_i - \ell^\infty_i| > \xi_N\}/N\right] + \Pi_H(\lambda^* - \epsilon_N - \xi_N \leq \ell^\infty_i < \lambda^* + \xi_N) \to 0.
+                \]
+            \end{itemize}
+
+        \item \textit{mTDR Analysis}:
+            \begin{itemize}[label=\scalebox{0.5}{$\bullet$}]
+                \setlength{\itemsep}{\baselineskip}
+                \item Derive:
+                \[
+                E_H[\#\{i : \theta_i = 1, \hat{\ell}_i < \hat{\lambda}\}] \geq E_H[\#\{i : \theta_i = 1, \ell_i < \lambda^*\}] - o(N).
+                \]
+                \item Divide both sides by \(E_H[\#\{i : \theta_i = 1\}] = N\pi_1\):
+                \[
+                mTDR_H(\hat{\varphi}) \geq mTDR_H(\varphi_{\lambda^*, H}) - o(1).
+                \]
+            \end{itemize}
+
+        
+    \end{itemize}
+\end{frame}
+%===
+%===
+\begin{frame}
+    \begin{itemize}[label=\scalebox{0.5}{$\bullet$}]
+        \item \textit{mFDR Analysis}:
+            \begin{itemize}[label=\scalebox{0.5}{$\bullet$}]
+                \setlength{\itemsep}{\baselineskip}
+                \item Derive similarly:
+                \[
+                E_H[\#\{i : \theta_i = 0, \hat{\ell}_i < \hat{\lambda}\}] \leq E_H[\#\{i : \theta_i = 0, \ell_i < \lambda^*\}] + o(N),
+                \]
+                \[
+                E_H[\#\{i : \hat{\ell}_i < \hat{\lambda}\}] \geq E_H[\#\{i : \ell_i < \lambda^*\}] - o(N).
+                \]
+                \item Use Taylor expansion:
+                \[
+                mFDR_H(\hat{\varphi}) \leq mFDR_H(\varphi_{\lambda^*, H}) + o(1).
+                \]
+            \end{itemize}
+
+        \item \textit{Final Result}:
+            \begin{itemize}[label=\scalebox{0.5}{$\bullet$}]
+                \setlength{\itemsep}{\baselineskip}
+                \item Define \(g(x) = \sup\{mTDR_H(\psi) : mFDR_H(\psi) \leq x\}\):
+                \[
+                mTDR_H(\hat{\varphi}) \geq mTDR_H(\varphi_{\lambda^*, H}) - o(1) \geq g(mFDR_H(\varphi_{\lambda^*, H})) - o(1) \geq g(mFDR_H(\hat{\varphi}) - o(1)) - o(1) \geq g(mFDR_H(\hat{\varphi})) - o(1).
+                \]
+                \item Prove that \(mFDR_H(\varphi_{\lambda^*, H}) \geq t - o(1)\). \qed
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+%===
+
+%===
+\begin{frame}{Spectral KDE method}
+    
+\end{frame}
+%===
+
+
+%===
+\begin{frame}
+
+\end{frame}
+%===
+
+
+%===
+\begin{frame}
+
+\end{frame}
+%===
+%===
+\begin{frame}
+
+\end{frame}
+%===
+
+
+%===
+\begin{frame}
+
+\end{frame}
+%===
+
+
+%===
+\begin{frame}
+
+\end{frame}
+%===
+
+
+%===
+\begin{frame}
+
+\end{frame}
+%===
+
+
+%===
+\begin{frame}
+
+\end{frame}
+%===
+
+%===
+\begin{frame}
+
+\end{frame}
+%===
+
+
+%===
+\begin{frame}
+
+\end{frame}
+%===
+
+
+%===
+\begin{frame}
+
+\end{frame}
+%===
 \end{document}
