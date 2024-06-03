@@ -20,6 +20,8 @@
 \usepackage{booktabs}
 \usepackage{array}
 \usepackage{tikz}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
 \usetikzlibrary{positioning}
 
 
@@ -246,6 +248,7 @@ TDR is defined as $\mathbb{E}(\text{proportion of signals})$ detected by a $\var
 
 \section[Empirical approach]{Empirical Bayesian Procedure}
 
+
 %===
 \begin{frame}{Thresholding procedure}
     
@@ -265,7 +268,10 @@ TDR is defined as $\mathbb{E}(\text{proportion of signals})$ detected by a $\var
              \hat{\lambda} = \hat{\lambda}(\hat{H},t) := \sup\{\lambda : \text{postFDR}_{\hat{H}}(\varphi_{\lambda,\hat{H}}) \leq t\}. \tag{9}
         \end{equation}
     \end{itemize}
-    
+    \vspace{2em}
+    \begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
+        \item Although the procedure is similar to the BH procedure, the BH procedure utilizes p-values.
+    \end{itemize}
 \end{frame}
 %===
 %===
@@ -302,6 +308,10 @@ TDR is defined as $\mathbb{E}(\text{proportion of signals})$ detected by a $\var
         \{i : \hat{\ell}_i(X) < \hat{\lambda} \} \subseteq \hat{S}_0 \subseteq \{i : \hat{\ell}_i(X) \leq \hat{\lambda} \}.
         \]
     \end{mydefbox}
+    \begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
+    \item Last term means that the procedure \(\hat{\varphi}\) includes all hypotheses with \(\hat{\ell}_i\) values smaller than the threshold \(\hat{\lambda}\), and may include hypotheses with \(\hat{\ell}_i\) values equal to \(\hat{\lambda}\).
+    \end{itemize}
+
 \end{frame}
 %===
 %===
@@ -317,6 +327,10 @@ TDR is defined as $\mathbb{E}(\text{proportion of signals})$ detected by a $\var
         \]
         where we take the conventions that \( \frac{1}{0} = \infty \), \( \frac{0}{0} = 0 \).
     \end{assumpbox}
+    \begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
+        \item Signal Strength Assumption
+        \item Weak signals → Hard FDR control, power ↓ Heller and Rosset (2021)
+    \end{itemize}
 \end{frame}
 %===
 %===
@@ -335,7 +349,11 @@ TDR is defined as $\mathbb{E}(\text{proportion of signals})$ detected by a $\var
             \]
             \item The Markov chain is stationary: the initial distribution \( \pi = (\pi_0, \pi_1) \) is the invariant distribution for \( Q \).
         \end{itemize}
-    \end{assumpbox}  
+    \end{assumpbox}
+    \begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
+        \item B : moment condition (used in Lemma 12, 31)
+        \item C : Required for identifiability for permutations
+    \end{itemize}
 \end{frame}
 % full rank가 중요한 이유? : 정확한 추정을 하기 위해서, 선형독립이어야 해가 유일하게 존재하는 것을 보장할 수 있기 때문
 %===
@@ -372,6 +390,9 @@ TDR is defined as $\mathbb{E}(\text{proportion of signals})$ detected by a $\var
         The suprema are over all multiple testing procedures \( \psi \) satisfying the bound on their mFDR, including
         oracle procedures allowed knowledge of the parameters \( H \).
     \end{mytheorembox}
+    \begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
+    \item Maintains the mFDR below a given level while nearly maximizing the mTDR.
+    \end{itemize}
 \end{frame}
 %===
 \section[Estimation of Emission Densities]{Estimation of emission densities}
@@ -384,6 +405,9 @@ TDR is defined as $\mathbb{E}(\text{proportion of signals})$ detected by a $\var
     \begin{assumpbox}{Assumption D}
         The density functions \( f_1, \ldots, f_J \) are linearly independent. [In the two-state setting it suffices to assume \( f_0 \neq f_1 \), which is implied by Assumption A.]
     \end{assumpbox}
+    \begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
+    \item C' : Ensures that all hidden states influence the data and applies general Markov chain convergence.
+    \end{itemize}
 \end{frame}
 %===
 %===
@@ -394,6 +418,10 @@ TDR is defined as $\mathbb{E}(\text{proportion of signals})$ detected by a $\var
         \Pi_H \left( \| \hat{f}_j - f_{\tau(j)} \|_\infty \geq M_N N^{-1/2} \right) \to 0.
         \]
     \end{mytheorembox}
+    \begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
+    \item counting measure : discrete setting.
+    \item $\tau$ : Since label switching issue.
+    \end{itemize}
 \end{frame}
 % tau가 왜 필요한지? 설명이 좀 필요할듯
 %===
@@ -409,20 +437,27 @@ TDR is defined as $\mathbb{E}(\text{proportion of signals})$ detected by a $\var
         \| f \|_{C^s} = \| f^{(\lfloor s \rfloor)} \|_{C^{s - \lfloor s \rfloor}} + \sum_{0 \leq i < \lfloor s \rfloor} \| f^{(i)} \|_\infty.
         \]
     \end{assumpbox}
+    \begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
+    \item Typical smoothness condition
+    
+    \end{itemize}
 \end{frame}
 %===
 %===
    \begin{frame}
     \begin{mytheorembox}{Theorem 5}
-        Grant Assumptions B, C', D, and E. Suppose \( L_0 \to \infty \) as \( N \to \infty \), and \( L_0^{\max(5, (J+3)/2)} r_N \to 0 \), where \( r_N = \left( \frac{N}{\log N} \right)^{-\frac{s}{1 + 2s}} \). Then there exist estimators \( \hat{f}_j, 1 \leq j \leq J \) (continuous so that the supremum below is measurable) and a permutation \( \tau \) such that, for some \( C > 0 \),
+        Grant Assumptions B, C', D, and E. Suppose \( L_0 \to \infty \) as \( N \to \infty \), and \( L_0^{\max(5, (J+3)/2)} r_N \to 0 \), where \( r_N = \left( \frac{N}{\log N} \right)^{-\frac{s}{1 + 2s}} \). Then there exist estimators \( \hat{f}_j, 1 \leq j \leq J \) (continuous so that the supremum below is measurable) and a permutation \( \tau \) s.t., for some \( C > 0 \),
         \[
-        \Pi_H \left( \| \hat{f}_j - f_{\tau(j)} \|_\infty \geq C L_0^5 r_N \right) \to 0.
+        \Pi_H \left( \| \hat{f}_j - f_{\tau(j)} \|_\infty \geq C L_0^5 r_N \right) \to 0.     \quad     (17)
         \]
         Convergence in expectation also holds: for some \( C' > 0 \),
         \[
-        \mathbb{E}_H \| \hat{f}_j - f_{\tau(j)} \|_\infty \leq C' L_0^5 r_N.
+        \mathbb{E}_H \| \hat{f}_j - f_{\tau(j)} \|_\infty \leq C' L_0^5 r_N.     \quad     (18)
         \]
     \end{mytheorembox}
+    \begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
+    \item The supremum norm is indeed possible at a near-minimax rate in the nonparametric setting.
+    \end{itemize}
 \end{frame}
 % 이어서 명제 6에서 HMM 세팅에서도 목표 수렴속도를 달성한다는 것을 시사 
 % 정리5는 스펙트럼 방법, 정리6은 KDE로 알고리즘
@@ -614,9 +649,11 @@ TDR is defined as $\mathbb{E}(\text{proportion of signals})$ detected by a $\var
                 \setlength{\itemsep}{\baselineskip}
                 \item Use Lemma 19: \(\xi_N \to 0\) exists such that \(\#\{i : |\ell_i - \ell^\infty_i| > \xi_N\}/N \to 0\).
                 \item Use Lemma 17: the distribution function of \(\ell^\infty_i\) is continuous:
-                \[
-                E_H\left[\#\{i : \lambda^* - \epsilon_N \leq \ell_i < \lambda^*\}/N\right] \leq E_H\left[\#\{i : |\ell_i - \ell^\infty_i| > \xi_N\}/N\right] + \Pi_H(\lambda^* - \epsilon_N - \xi_N \leq \ell^\infty_i < \lambda^* + \xi_N) \to 0.
-                \]
+                \begin{align*}
+                E_H\left[\#\{i : \lambda^* - \epsilon_N \leq \ell_i < \lambda^*\}/N\right] 
+                &\leq E_H\left[\#\{i : |\ell_i - \ell^\infty_i| > \xi_N\}/N\right] \\
+                &\quad + \Pi_H(\lambda^* - \epsilon_N - \xi_N \leq \ell^\infty_i < \lambda^* + \xi_N) \to 0.
+                \end{align*}
             \end{itemize}
 
         \item \textit{mTDR Analysis}:
@@ -659,9 +696,12 @@ TDR is defined as $\mathbb{E}(\text{proportion of signals})$ detected by a $\var
             \begin{itemize}[label=\scalebox{0.5}{$\bullet$}]
                 \setlength{\itemsep}{\baselineskip}
                 \item Define \(g(x) = \sup\{mTDR_H(\psi) : mFDR_H(\psi) \leq x\}\):
-                \[
-                mTDR_H(\hat{\varphi}) \geq mTDR_H(\varphi_{\lambda^*, H}) - o(1) \geq g(mFDR_H(\varphi_{\lambda^*, H})) - o(1) \geq g(mFDR_H(\hat{\varphi}) - o(1)) - o(1) \geq g(mFDR_H(\hat{\varphi})) - o(1).
-                \]
+                \begin{align*}
+                mTDR_H(\hat{\varphi}) &\geq mTDR_H(\varphi_{\lambda^*, H}) - o(1) \\
+                &\geq g(mFDR_H(\varphi_{\lambda^*, H})) - o(1) \\
+                &\geq g(mFDR_H(\hat{\varphi}) - o(1)) - o(1) \\
+                &\geq g(mFDR_H(\hat{\varphi})) - o(1).
+                \end{align*}
                 \item Prove that \(mFDR_H(\varphi_{\lambda^*, H}) \geq t - o(1)\). \qed
             \end{itemize}
     \end{itemize}
@@ -670,40 +710,209 @@ TDR is defined as $\mathbb{E}(\text{proportion of signals})$ detected by a $\var
 
 %===
 \begin{frame}{Spectral KDE method}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.8\textwidth]{fig-2/KDE.png}
+    \end{figure}
+
+
+    \begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
+        \item KDE is a nonparametric method. (kernel smoothing)
+        \item Spectral method → eigenvalue
+    \end{itemize}
+\end{frame}
+%===
+\begin{frame}
+    \begin{mytheorembox}{Approximating emission density}
+    Let \(K\) be a bounded Lipschitz-continuous function, supported in \([-1,1]\), such that if we define
+    \begin{equation}
+        K_L(x,y) = 2^L K(2^L(x-y)), \tag{25}
+        \end{equation}
+    then we have, for any \(f \in C^s(\mathbb{R})\),
+    \begin{equation*}
+        K_L[f](x) = \int K_L(x,y) f(y) \, dy,
+        \end{equation*}
+    with
+    \begin{equation}
+        \|f - K_L[f]\|_\infty \leq C \|f\|_{C^s} 2^{-Ls}. \tag{26}
+        \end{equation}
+    \end{mytheorembox}
+    \begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
+        \vspace{1.5em}
+        \itemsep1.2em
+        \item By using (26), We can estimate emission density!
+        \item I'll explain an example idea on the next page.
+    \end{itemize}
+\end{frame}
+%===
+\begin{frame}{Idea example}
+    \begin{itemize}[label=\scalebox{0.5}{$\bullet$}]
+        \item Joint distribution and define matrices
+        \[
+        M_x = \mathbb{E}_H
+        \begin{pmatrix}
+        K_L(x, X_2) & K_L(x, X_2) \mathbf{1}\{X_3 \in [-1, 1]\} \\
+        K_L(x, X_2) \mathbf{1}\{X_1 \in [-1, 1]\} & K_L(x, X_2) \mathbf{1}\{X_1 \in [-1, 1], X_3 \in [-1, 1]\}
+        \end{pmatrix},
+        \]
+
+        \[
+        P = \mathbb{E}_H
+        \begin{pmatrix}
+        1 & \mathbf{1}\{X_3 \in [-1, 1]\} \\
+        \mathbf{1}\{X_1 \in [-1, 1]\} & \mathbf{1}\{X_1 \in [-1, 1], X_3 \in [-1, 1]\}
+        \end{pmatrix}.
+        \]
+        
+        \item Take eigenvalues \\
+        \begin{itemize}[label=\scalebox{0.5}{$\bullet$}]
+            \item The matrices \( P \) and \( M_x \) esimated empirical aveg.
+            \item Define \( B_x = P^{-1} M_x \) and estimate parameter from eigenvalues \(K_L[f_j]\)
+        \end{itemize}
+        \item Simultaneous Diagonalization \\
+        \begin{itemize}[label=\scalebox{0.5}{$\bullet$}]
+            \item we can applicate above general setting $J > 1$
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+
+%===
+\begin{frame}{Lemma}
+
+\begin{mytheorembox}{Lemma 11.}
+ For \(L_0 \in \mathbb{N}\), let \(h_1, \ldots, h_{L_0}\) be arbitrary functions. Define, for data \(X\) from the HMM (1):
+
+\begin{align*}
+M_x &:= \left(E_H\left[h_l(X_1) K_L(x, X_2) h_m(X_3)\right]\right)_{l,m \leq L_0} \in \mathbb{R}^{L_0 \times L_0}, \\
+P &:= \left(E_H\left[h_l(X_1) h_m(X_3)\right]\right)_{l,m \leq L_0} \in \mathbb{R}^{L_0 \times L_0}, \\
+D_x &:= \text{diag}\left(K_L[f_j](x)_{j \leq J}\right) \in \mathbb{R}^{J \times J}, \\
+O &:= \left(E_H\left[h_l(X_1) \mid \theta_1 = j\right]\right)_{l \leq L_0, j \leq J} \in \mathbb{R}^{L_0 \times J}.
+\end{align*}
+
+\end{mytheorembox}
+   \begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
+        \item The proof is a conditional technique learned from stochastic process.
+    \end{itemize}
+\end{frame}
+%===
+
+%===
+\begin{frame}
+
+    \begin{mytheorembox}{Contd.}
+    Then,
+    \begin{align*}
+    M_x &= O \ \text{diag}(\pi) Q D_x Q O^T, \\
+    P &= O \ \text{diag}(\pi) Q^2 O^T.
+    \end{align*}
     
+    If \(V \in \mathbb{R}^{L_0 \times J}\) is such that \(V P V\) is \textbf{invertible}, then the matrix
+    
+    \begin{align*}
+    B_x &:= (V P V)^{-1} V M_x V
+    \end{align*}
+    
+    satisfies
+    
+    \begin{align*}
+    B_x &= (Q O V)^{-1} D_x (Q O V),
+    \end{align*}
+    \end{mytheorembox}
+    \begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
+
+        \item B : \textit{diagonaalisable simultaneously}
+        
+    \end{itemize}
+\end{frame}
+%===
+
+
+%===
+\begin{frame}{Algorithm 1}
+    \begin{mytheorembox}{Input}
+        \begin{itemize}[label=\scalebox{0.5}{$\bullet$}]
+            \item Data : $X_n : n \leq N+2$ in HMM
+            \item Functions $h_1, \ldots, h_{L_0}$, uniformly bounded, s.t. $O = (\mathbb{E}[h_l(X_1) \mid \theta_1 = j])_{l \leq L_0, j \leq J}$
+            \item Finite sets $D_N \subseteq \{(a, u) \in \mathbb{R}^{J(J-1)/2} \times \mathbb{R}^{J(J-1)/2} : \sum |a_i| \leq 1\}$ s.t.
+            \[
+            \max_{(a, u) \in D_N} \text{sep}(B_{a, u})
+            \]
+            where $B_{a, u} = \sum a_i B_{u_i}$ for $B_x$ for some $V$.
+        \end{itemize}
+        
+    \end{mytheorembox}
+\end{frame}
+%===
+%===
+\begin{frame}
+    \begin{mytheorembox}{estimate}
+        \begin{itemize}[label=\scalebox{0.5}{$\bullet$}]
+             \item \textbf{Estimate} the matrices $P$, $(M_x, x \in \mathbb{R})$ by taking empirical averages. For $L$ s.t. $2L \approx \left(\frac{N}{\log N}\right)^{\frac{1}{1+2s}}$, define
+            \[
+            \hat{P} = \hat{P}_{L_0} = \left(N^{-1} \sum_{n \leq N} h_l(X_n) h_m(X_{n+2})\right)_{l, m \leq L_0},
+            \]
+            \[
+            \hat{M}_x = \hat{M}_{x, L_0, L} = \left(N^{-1} \sum_{n \leq N} h_l(X_n) K_L(x, X_{n+1}) h_m(X_{n+2})\right)_{l, m \leq L_0}.
+            \]
+        
+            \item Let $\hat{V} = \hat{V}_{L_0} \in \mathbb{R}^{L_0 \times J}$ be a matrix of orthonormal right singular vectors of $\hat{P}$ (fail if $\hat{P}$ is of rank less than $J$).
+            
+        \end{itemize}
+        
+    \end{mytheorembox}
+    \begin{itemize}[label=\scalebox{0.5}{$\blacksquare$}]
+
+        \item Why fail if less than rank J ? : information loss.
+        \item I think $\hat{P}$ and $\hat{M}_x$ describe the relationships between different nodes.
+        
+        \end{itemize}
 \end{frame}
 %===
 
 
 %===
 \begin{frame}
-
+    \begin{mytheorembox}{Set and Choose}
+        \begin{itemize}[label=\scalebox{0.5}{$\bullet$}]
+    
+        \item \textbf{Set}, for $x \in \mathbb{R}$ and for $a, u \in \mathbb{R}^{J(J-1)/2}$,
+        \[
+        \hat{B}_x = \hat{B}_{x, L_0, L} := (\hat{V} \hat{P} \hat{V})^{-1} \hat{V} \hat{M}_x \hat{V} \text{ (fail if } \hat{B}_{a, u} \text{ is not diagonalisable)}.
+        \]
+    
+        \item \textbf{Choose} $\hat{R}$ of normalised columns diagonalising $\hat{B}_x$.
+    \end{itemize}
+        
+    \end{mytheorembox}
 \end{frame}
 %===
 
 
 %===
 \begin{frame}
-
-\end{frame}
-%===
-%===
-\begin{frame}
-
-\end{frame}
-%===
-
-
-%===
-\begin{frame}
-
-\end{frame}
-%===
-
-
-%===
-\begin{frame}
-
+    \begin{mytheorembox}{Output}
+    \begin{itemize}[label=\scalebox{0.5}{$\bullet$}]
+        \item Output $(\hat{f}_j : j \leq J)$, where, defining $\tilde{M}_x \hat{V}$,
+        \[
+        \hat{B}_{a, u} := \sum a_i \hat{B}_{u_i},
+        \]
+        with $(\hat{a}, \hat{u}) \in \arg\max_{D_N} \text{sep}(\hat{B}_{a, u})$, and
+        \[
+        \tilde{f}^L_j(x) = (\hat{R}^{-1} \hat{B}_x \hat{R})_{jj},
+        \]
+        we set
+        \[
+        \hat{f}_j(x) =
+        \begin{cases}
+        \tilde{f}^L_j(x) & \text{if } |\tilde{f}^L_j(x)| \leq N^\alpha, \\
+        N^\alpha \operatorname{sign}(\tilde{f}^L_j(x)) & \text{otherwise},
+        \end{cases}
+        \]
+        for arbitrary $\alpha > 0$.
+    \end{itemize}
+        
+    \end{mytheorembox}
 \end{frame}
 %===
 
