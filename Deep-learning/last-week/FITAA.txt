@@ -1,0 +1,24 @@
+논문 제목 : "Feature Importance-aware Transferable Adversarial Attacks"
+
+# 문제점
+1. Transferability의 중요성
+- 적대적 예제의 transferability는 알려지지 않은 모델(블랙박스 모델)을 공격하는 데 중요
+- 실용적인 시나리오에서, 모델을 알지 못하는 상황에서 공격을 수행하는 것이 필요
+
+2. 기존 방법의 한계
+- 현존하는 transferable 공격은 이미지의 객체 속성을 고려하지 않고 무작위로 feature를 왜곡하여 예측 정확도를 낮춤
+- 이러한 공격은 해당 모델에 최적화된 local-optima에 도달하여 transferability를 저해
+
+
+# 해결책
+1. Feature Importance-aware (FIA) 공격 제안
+- 모형의 결정력에 중요한 object를 감지하는 feature를 방해하는 새로운 공격 방법을 제안
+- Feature importance는 aggregate gradient를 통해 얻음
+
+2. Aggregate Gradient의 역할
+- Aggregate gradient는 원본 이미지의 무작위 변환 배치에 의해 계산된 source model에서 도출된 feature map에 따름
+- 이 gradient는 관심 있는 물체에 강하게 연관되어 있으며, 다양한 모델에서 invariance를 나타냄
+
+3. FIA의 적용
+- 중요한 feature를 공격하여, 다양한 모델에 대해 transferability를 향상
+- 블랙박스 공격 시나리오에서 더 효과적인 공격을 수행할 수 있음
